@@ -1,6 +1,164 @@
-<html>
-    <body>
-        <h1>Demo file </h1>
-        <p>Hi this is demo </p>
-    </body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TechNovators — Telemedicine for Rural Healthcare</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="" alt="" class="logo" aria-hidden="true" />
+        <h1>TechNovators</h1>
+        <p class="tag">Telemedicine &amp; Digital Healthcare for Rural Areas</p>
+      </div>
+
+      <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainNav">
+        ☰ <span class="sr-only">Menu</span>
+      </button>
+
+      <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#approach">Technical Approach</a></li>
+          <li><a href="#benefits">Impact</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h2>Telemedicine Access for Rural Healthcare</h2>
+          <p>
+            A multilingual telemedicine platform for video consultations, AI symptom screening,
+            and medicine availability — designed to serve rural communities.
+          </p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#contact">Get in touch</a>
+            <button class="btn ghost" id="demoBtn">Try Symptom Checker</button>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h3>Quick facts</h3>
+          <ul>
+            <li><strong>Problem ID:</strong> 25018 (Telemedicine for Nabha)</li>
+            <li><strong>Theme:</strong> MedTech / HealthTech</li>
+            <li><strong>Approach:</strong> ML, NLP, WebRTC, NoSQL, Node.js</li>
+          </ul>
+          <a class="small-link" href="#approach">Read technical approach ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section container">
+      <h2 class="section-title">Core features</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Video Consultations</h3>
+          <p>WebRTC-based real-time audio/video calls for scheduled and on-demand consultations.</p>
+        </article>
+
+        <article class="card">
+          <h3>AI Symptom Checker</h3>
+          <p>Lightweight NLP model to pre-screen symptoms and triage urgency (optimized for low bandwidth).</p>
+        </article>
+
+        <article class="card">
+          <h3>Medicine Availability</h3>
+          <p>Real-time stock via API integration with local pharmacies (NoSQL for fast updates).</p>
+        </article>
+
+        <article class="card">
+          <h3>Multilingual UI</h3>
+          <p>Support for local languages, speech-to-text options, and simple UX for first-time users.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="approach" class="section alt-bg">
+      <div class="container">
+        <h2 class="section-title">Technical approach</h2>
+        <div class="two-col">
+          <div>
+            <h4>AI & ML</h4>
+            <ul>
+              <li>SVM / Logistic Regression for triage & urgency classification</li>
+              <li>CNN for simple image uploads (e.g., skin)</li>
+              <li>NLP models for multilingual symptom parsing</li>
+            </ul>
+            <h4>Web & Backend</h4>
+            <ul>
+              <li>Front-end dashboards for patients and doctors (React / plain JS possible)</li>
+              <li>Node.js backend with NoSQL (MongoDB) for fast, real-time stock/status</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Security & Deployment</h4>
+            <ul>
+              <li>End-to-end encryption for video and messages</li>
+              <li>HIPAA/GDPR-like data privacy safeguards</li>
+              <li>Low-bandwidth optimizations & volunteer-assisted kiosks</li>
+            </ul>
+            <p class="muted">(Summary adapted from your project slides.)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits" class="section container">
+      <h2 class="section-title">Impact & Benefits</h2>
+      <ul class="benefits-list">
+        <li>Direct access to specialists without long travel</li>
+        <li>Continuous monitoring for chronic patients (diabetes, hypertension)</li>
+        <li>Cost & time savings for daily-wage workers</li>
+        <li>Digital records and prior updates on doctor/medicine availability</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="section alt-bg container">
+      <h2 class="section-title">Contact / Request demo</h2>
+      <form id="contactForm" class="contact-form" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required />
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Send message</button>
+          <button type="button" class="btn ghost" id="resetBtn">Reset</button>
+        </div>
+
+        <p id="formMsg" class="form-msg" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Built for Smart India Hackathon 2025 — TechNovators.</p>
+        <p class="muted">Content adapted from submission slides. :contentReference[oaicite:1]{index=1}</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
 </html>
