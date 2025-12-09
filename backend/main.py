@@ -1,3 +1,10 @@
+from fastapi import Depends
+from sqlalchemy.orm import Session
+from backend.db.deps import get_db
+from backend.db.deps import get_db
+from sqlalchemy import text
+
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -10,6 +17,14 @@ import shutil
 app = FastAPI(title="AccessMed Connect API", version="1.0.0")
 
 # ---------- CORS so frontend (Live Server) can call backend ----------
+
+@app.get("/test-db")
+def test_db_connection(db: Session = Depends(get_db)):
+    try:
+        result = db.execute(text("SELECT 1")).scalar()
+        return {"db_working": bool(result), "result": result}
+    except Exception as e:
+        return {"error": str(e)}
 
 origins = [
     "http://127.0.0.1:5500",
