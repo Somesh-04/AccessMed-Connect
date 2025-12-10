@@ -18,34 +18,39 @@
         <p>Your feedback helps us improve AccessMed Connect</p>
     </div>
 
-    <!-- SUGGESTION BOX CARD -->
+    <!-- SUGGESTION BOX CONTAINER -->
     <div class="suggestion-container">
 
         <div class="suggestion-card">
+            
             <h2>📝 Share Your Feedback</h2>
 
             <p class="info-text">
-                Tell us your ideas, issues, or suggestions.  
+                Tell us your ideas, issues, or suggestions.<br>
                 Our team reviews every message to improve your experience.
             </p>
 
+            <!-- SUGGESTION FORM -->
             <form class="suggestion-form">
 
                 <label>Name</label>
-                <input type="text" placeholder="Enter your name">
+                <input type="text" placeholder="Enter your name" required>
 
                 <label>Email</label>
-                <input type="email" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email" required>
 
                 <label>Suggestion / Message</label>
-                <textarea placeholder="Write your message here..."></textarea>
+                <textarea placeholder="Write your message here..." required></textarea>
 
                 <button type="submit" class="submit-btn">Submit</button>
 
             </form>
+
         </div>
 
     </div>
 
+    <!-- MAIN JS FILE -->
+    <script src="support.js"></script>
 </body>
 </html>
