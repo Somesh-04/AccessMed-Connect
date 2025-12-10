@@ -1,0 +1,185 @@
+/* ============================================
+   PAGE BACKGROUND
+============================================ */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+    background: radial-gradient(circle at top, #6d28d9, #4f46e5, #0f172a);
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   FLOATING PARTICLES
+============================================ */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,0.18) 2px, transparent 2px),
+                      radial-gradient(rgba(167,139,250,0.28) 2px, transparent 2px);
+    background-size: 60px 60px;
+    animation: floatParticles 14s linear infinite;
+    opacity: 0.35;
+}
+
+@keyframes floatParticles {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-120px, -120px); }
+}
+
+/* ============================================
+   SUPPORT HEADER
+============================================ */
+.support-header {
+    text-align: center;
+    margin-top: 45px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.support-header h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 18px rgba(255,255,255,0.35);
+}
+
+.support-header p {
+    color: #cbd5e1;
+    margin-top: 10px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ============================================
+   SUGGESTION CARD
+============================================ */
+.suggestion-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.suggestion-card {
+    width: 100%;
+    max-width: 650px;
+    background: rgba(15, 23, 42, 0.6); /* More visible than before */
+    padding: 40px;
+    border-radius: 28px;
+    backdrop-filter: blur(14px);
+    box-shadow:
+        0 0 90px rgba(76, 29, 149, 0.55),
+        0 0 50px rgba(59, 130, 246, 0.32),
+        inset 0 0 22px rgba(255,255,255,0.06);
+    animation: slideUp 0.8s ease-in-out;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.13); /* Makes card visible */
+}
+
+.suggestion-card::before {
+    content: "";
+    position: absolute;
+    top: -25px;
+    left: 45%;
+    width: 80px;
+    height: 8px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #a78bfa, #6366f1);
+    box-shadow: 0 0 25px rgba(167,139,250,0.9);
+}
+
+.suggestion-card h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 26px;
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(167,139,250,0.55);
+}
+
+.info-text {
+    text-align: center;
+    color: #cbd5e1;
+    margin-bottom: 25px;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* ============================================
+   FORM STYLING
+============================================ */
+.suggestion-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-form label {
+    font-size: 15px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.suggestion-form input,
+.suggestion-form textarea {
+    width: 100%;
+    padding: 13px 15px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.16);
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    outline: none;
+    transition: 0.25s;
+}
+
+.suggestion-form input:focus,
+.suggestion-form textarea:focus {
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow:
+        0 0 15px rgba(167, 139, 250, 0.6),
+        0 0 8px rgba(255,255,255,0.3);
+    border-color: rgba(167,139,250,0.7);
+}
+
+.suggestion-form textarea {
+    height: 160px;
+    resize: none;
+}
+
+/* Submit Button */
+.submit-btn {
+    padding: 14px;
+    background: linear-gradient(135deg, #6d28d9, #4f46e5);
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 25px rgba(167, 139, 250, 0.8);
+}
+
+/* ============================================
+   ANIMATIONS
+============================================ */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
