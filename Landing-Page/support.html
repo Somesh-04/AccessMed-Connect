@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support – Suggestion Box</title>
+    <link rel="stylesheet" href="support.css">
+</head>
+
+<body>
+
+    <div class="floating-particles"></div>
+
+    <div class="support-header">
+        <h1>Support & Suggestion Box</h1>
+        <p>Your feedback helps us improve AccessMed Connect</p>
+    </div>
+
+    <div class="suggestion-container">
+        <div class="suggestion-card">
+
+            <h2>📝 Share Your Feedback</h2>
+
+            <p class="info-text">
+                Tell us your ideas, issues, or suggestions.<br>
+                Our team reviews every message.
+            </p>
+
+            <!-- IMPORTANT FORM -->
+            <form id="supportForm" class="suggestion-form">
+
+                <label>Name</label>
+                <input type="text" name="name" required>
+
+                <label>Email</label>
+                <input type="email" name="email" required>
+
+                <label>Message</label>
+                <textarea name="message" required></textarea>
+
+                <button type="submit" class="submit-btn">Submit</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <!-- Your JS -->
+    <script src="support.js"></script>
+
+</body>
+</html>

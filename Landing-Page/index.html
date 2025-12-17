@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessMed Connect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HERO HEADER -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="nav-pill">Home</a>
+        <a href="#" class="nav-pill">MedAI</a>
+        <a href="emergency.html" class="nav-pill">Emergency</a>
+        <a href="/AccessMed-Connect/LoginPage-Somesh/Templates/index.html" class="nav-pill">Profile</a>
+        <a href="support.html" class="nav-pill">Support</a>
+    </nav>
+
+    <!-- FEATURE CARDS -->
+    <div class="feature-row">
+
+        <div class="feature-card">
+            <div class="feature-icon-text">🩺</div>
+            <h4>Smart Diagnosis</h4>
+            <p>AI-assisted preliminary medical assessment.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-text">📁</div>
+            <h4>Medical Records</h4>
+            <p>Access prescriptions, reports, and visit history.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-text">🚑</div>
+            <h4>Emergency</h4>
+            <p>Instant access to ambulance & emergency services.</p>
+        </div>
+
+    </div>
+
+    <!-- PARALLEL REFERENCE CARDS (ENLARGED) -->
+    <div class="ref-card-container">
+
+        <!-- Vitals Card -->
+        <div class="ref-card">
+            <h3>📊 Normal Vitals Reference</h3>
+            <table class="vitals-table">
+                <tr><td><b>Body Temperature</b></td><td>97.8°F – 99°F</td></tr>
+                <tr><td><b>Pulse Rate</b></td><td>60 – 100 bpm</td></tr>
+                <tr><td><b>Respiratory Rate</b></td><td>12 – 20 breaths/min</td></tr>
+                <tr><td><b>Blood Pressure</b></td><td>120/80 mmHg</td></tr>
+                <tr><td><b>Oxygen Saturation</b></td><td>95% – 100%</td></tr>
+                <tr><td><b>Blood Sugar (Random)</b></td><td>70 – 140 mg/dL</td></tr>
+            </table>
+            <p class="note">*Values may vary depending on age and medical conditions.</p>
+        </div>
+
+        <!-- Emergency Card -->
+        <div class="ref-card">
+            <h3>🚨 Emergency Symptoms (Red Flags)</h3>
+            <ul class="symptom-list">
+                <li>Sudden severe chest pain</li>
+                <li>Difficulty breathing</li>
+                <li>Unconsciousness or collapse</li>
+                <li>Severe headache with vomiting</li>
+                <li>One-sided body weakness</li>
+                <li>Uncontrolled bleeding</li>
+                <li>Severe abdominal pain</li>
+            </ul>
+            <p class="note">Seek immediate medical help if any of these occur.</p>
+        </div>
+
+    </div>
+
+    <!-- Scroll Space -->
+    <div style="height: 45px;"></div>
+
+    <!-- LIGHTBOX POPUP -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img">
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div>
+            <h3>Contact</h3>
+            <p>Phone: +91 9876543210</p>
+            <p>Email: info@accessmed.com</p>
+
+            <h3>Address</h3>
+            <p>GandhiNagar Colony, Kanke Road, Ranchi, Jharkhand, India-834001</p>
+
+            <h3>Ambulance Service</h3>
+            <p><b>24×7 Available</b></p>
+            <p>Contact Number: 0651-2231425</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="#">MedAI</a>
+            <a href="emergency.html">Emergency Support</a>
+            <a href="#">Patient Portal</a>
+
+            <h3>Patient Related</h3>
+            <p>Checkup • Reports • Appointments</p>
+        </div>
+
+        <div>
+            <h3>Social Media</h3>
+            <a href="https://www.instagram.com/centralcoalfieldsltd/">Instagram</a>
+            <a href="https://www.facebook.com/CentralCoalfieldsLtd/?fref=ts">Facebook</a>
+            <a href="https://x.com/cclranchi">Twitter</a>
+
+            <h3>Working Hours</h3>
+            <p>Mon–Sat: 9 AM – 6 PM</p>
+
+            <h3>Feedback</h3>
+            <p>We value your suggestions!</p>
+        </div>
+
+    </footer>
+
+    <div class="bottom-bar">
+        © 2025 AccessMed Connect | All Rights Reserved
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById("lightbox-img").src = src;
+            document.getElementById("lightbox").style.display = "flex";
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+    </script>
+</body>
+</html>
