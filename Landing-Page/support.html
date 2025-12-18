@@ -4,50 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support – Suggestion Box</title>
+
     <link rel="stylesheet" href="support.css">
 </head>
 
 <body>
 
-    <div class="floating-particles"></div>
+    <!-- APP ROOT : controls scrolling -->
+    <div class="app-root">
 
-    <div class="support-header">
-        <h1>Support & Suggestion Box</h1>
-        <p>Your feedback helps us improve AccessMed Connect</p>
+        <!-- Decorative layer -->
+        <div class="floating-particles" aria-hidden="true"></div>
+
+        <main>
+
+            <!-- Header -->
+            <header class="support-header">
+                <h1>Support &amp; Suggestion Box</h1>
+                <p>Your feedback helps us improve AccessMed Connect</p>
+            </header>
+
+            <!-- Form Card -->
+            <section class="suggestion-container">
+                <div class="suggestion-card">
+
+                    <h2>
+                        <span aria-hidden="true">📝</span>
+                        Share Your Feedback
+                    </h2>
+
+                    <p class="info-text">
+                        Tell us your ideas, issues, or suggestions.<br>
+                        Our team reviews every message.
+                    </p>
+
+                    <form id="supportForm" class="suggestion-form" novalidate>
+
+                        <label for="name">Name</label>
+                        <input id="name" type="text" name="name" autocomplete="name" required>
+
+                        <label for="email">Email</label>
+                        <input id="email" type="email" name="email" autocomplete="email" required>
+
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+
+                        <button type="submit" class="submit-btn">
+                            Submit
+                        </button>
+
+                        <p id="formStatus" aria-live="polite"></p>
+
+                    </form>
+
+                </div>
+            </section>
+
+        </main>
+
     </div>
 
-    <div class="suggestion-container">
-        <div class="suggestion-card">
-
-            <h2>📝 Share Your Feedback</h2>
-
-            <p class="info-text">
-                Tell us your ideas, issues, or suggestions.<br>
-                Our team reviews every message.
-            </p>
-
-            <!-- IMPORTANT FORM -->
-            <form id="supportForm" class="suggestion-form">
-
-                <label>Name</label>
-                <input type="text" name="name" required>
-
-                <label>Email</label>
-                <input type="email" name="email" required>
-
-                <label>Message</label>
-                <textarea name="message" required></textarea>
-
-                <button type="submit" class="submit-btn">Submit</button>
-
-            </form>
-
-        </div>
-    </div>
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
-    <!-- Your JS -->
     <script src="support.js"></script>
 
 </body>

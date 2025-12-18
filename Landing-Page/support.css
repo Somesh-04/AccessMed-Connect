@@ -1,14 +1,53 @@
 /* ============================================
-   PAGE BACKGROUND
+   GLOBAL RESET
 ============================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ============================================
+   LOCK BROWSER SCROLL (IMPORTANT)
+============================================ */
+html,
 body {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: system-ui, sans-serif;
-    background: radial-gradient(circle at top, #6d28d9, #4f46e5, #0f172a);
-    color: #fff;
+    overflow: hidden; /* KILLS white overscroll */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ============================================
+   APP ROOT (INTERNAL SCROLL)
+============================================ */
+.app-root {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
     overflow-x: hidden;
-    position: relative;
+
+    overscroll-behavior: none;
+
+    color: #ffffff;
+
+    /* ===== STABLE GRADIENT (NO WHITE FLASH EVER) ===== */
+    background:
+        radial-gradient(
+            1200px circle at top center,
+            #6d28d9 0%,
+            #4f46e5 35%,
+            transparent 70%
+        ),
+        linear-gradient(
+            180deg,
+            #4f46e5 0%,
+            #312e81 50%,
+            #0f172a 100%
+        );
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================
@@ -16,17 +55,17 @@ body {
 ============================================ */
 .floating-particles {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
+
     background-image:
-        radial-gradient(rgba(255,255,255,0.18) 2px, transparent 2px),
-        radial-gradient(rgba(167,139,250,0.28) 2px, transparent 2px);
-    background-size: 60px 60px;
-    animation: floatParticles 14s linear infinite;
-    opacity: 0.22; /* toned down for PSU / enterprise */
+        radial-gradient(rgba(255,255,255,0.15) 2px, transparent 2px),
+        radial-gradient(rgba(167,139,250,0.25) 2px, transparent 2px);
+
+    background-size: 70px 70px;
+    animation: floatParticles 20s linear infinite;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
 }
 
 @keyframes floatParticles {
@@ -35,84 +74,87 @@ body {
 }
 
 /* ============================================
-   SUPPORT HEADER
+   HEADER
 ============================================ */
 .support-header {
     text-align: center;
-    margin-top: 45px;
-    animation: fadeIn 0.8s ease-in-out;
+    margin-top: clamp(32px, 6vw, 56px);
+    padding: 0 20px;
 }
 
 .support-header h1 {
-    font-size: 38px;
+    font-size: clamp(26px, 4vw, 38px);
     font-weight: 700;
-    letter-spacing: 1px;
     text-shadow: 0 0 14px rgba(255,255,255,0.3);
 }
 
 .support-header p {
-    color: #cbd5e1;
     margin-top: 10px;
-    font-size: 18px;
-    opacity: 0.9;
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: #cbd5e1;
 }
 
 /* ============================================
-   SUGGESTION CARD
+   CONTAINER
 ============================================ */
 .suggestion-container {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
-    padding: 0 20px;
+    padding: clamp(24px, 5vw, 48px) 20px;
 }
 
+/* ============================================
+   CARD
+============================================ */
 .suggestion-card {
     width: 100%;
-    max-width: 650px;
-    background: rgba(15, 23, 42, 0.6);
-    padding: 40px;
-    border-radius: 28px;
+    max-width: min(650px, 92vw);
+    padding: clamp(24px, 4vw, 40px);
+
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(14px);
+
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.14);
+
     box-shadow:
-        0 0 50px rgba(76, 29, 149, 0.35),
-        0 0 25px rgba(59, 130, 246, 0.22),
-        inset 0 0 18px rgba(255,255,255,0.05);
-    animation: slideUp 0.8s ease-in-out;
+        0 0 40px rgba(76, 29, 149, 0.28),
+        0 0 18px rgba(59, 130, 246, 0.18);
+
     position: relative;
-    border: 1px solid rgba(255,255,255,0.13);
 }
 
+/* Accent bar */
 .suggestion-card::before {
     content: "";
     position: absolute;
-    top: -25px;
-    left: 45%;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 80px;
     height: 8px;
     border-radius: 10px;
     background: linear-gradient(90deg, #a78bfa, #6366f1);
-    box-shadow: 0 0 18px rgba(167,139,250,0.7);
 }
 
+/* ============================================
+   CARD TEXT
+============================================ */
 .suggestion-card h2 {
     text-align: center;
-    margin-bottom: 15px;
-    font-size: 26px;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(167,139,250,0.45);
+    margin-bottom: 14px;
+    font-size: clamp(20px, 3vw, 26px);
 }
 
 .info-text {
     text-align: center;
-    color: #cbd5e1;
-    margin-bottom: 25px;
+    margin-bottom: 26px;
     font-size: 15px;
-    opacity: 0.9;
+    color: #cbd5e1;
 }
 
 /* ============================================
-   FORM STYLING
+   FORM
 ============================================ */
 .suggestion-form {
     display: flex;
@@ -120,9 +162,9 @@ body {
 }
 
 .suggestion-form label {
-    font-size: 15px;
-    margin-bottom: 6px;
+    font-size: 14px;
     font-weight: 500;
+    margin-bottom: 6px;
 }
 
 .suggestion-form input,
@@ -131,26 +173,11 @@ body {
     padding: 13px 15px;
     margin-bottom: 22px;
     border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.12);
+    color: #ffffff;
     font-size: 15px;
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
     outline: none;
-    transition: 0.25s;
-}
-
-.suggestion-form input::placeholder,
-.suggestion-form textarea::placeholder {
-    color: rgba(255,255,255,0.6);
-}
-
-.suggestion-form input:focus,
-.suggestion-form textarea:focus {
-    background: rgba(255, 255, 255, 0.18);
-    box-shadow:
-        0 0 12px rgba(167, 139, 250, 0.5),
-        0 0 6px rgba(255,255,255,0.25);
-    border-color: rgba(167,139,250,0.65);
 }
 
 .suggestion-form textarea {
@@ -159,54 +186,40 @@ body {
 }
 
 /* ============================================
-   SUBMIT BUTTON
+   BUTTON
 ============================================ */
 .submit-btn {
     padding: 14px;
-    background: linear-gradient(135deg, #6d28d9, #4f46e5);
+    font-size: 16px;
+    font-weight: 600;
     border: none;
     border-radius: 14px;
-    font-size: 18px;
-    color: white;
+    background: linear-gradient(135deg, #6d28d9, #4f46e5);
+    color: #ffffff;
     cursor: pointer;
-    transition: 0.25s;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.submit-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 0 16px rgba(167, 139, 250, 0.5);
-}
-
-.submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+.submit-btn:hover {
+    box-shadow: 0 0 16px rgba(167,139,250,0.5);
 }
 
 /* ============================================
-   ANIMATIONS
+   STATUS
 ============================================ */
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+#formStatus {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 14px;
 }
 
 /* ============================================
-   PERFORMANCE OPTIMIZATION (LOW-END DEVICES)
+   REDUCED MOTION
 ============================================ */
 @media (prefers-reduced-motion: reduce) {
-
     * {
         animation: none !important;
-        transition: none !important;
     }
 
     .floating-particles {
