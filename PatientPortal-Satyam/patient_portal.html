@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Patient Portal – AccessMed Connect</title>
+    <link rel="stylesheet" href="patient_portal.css">
+</head>
+
+<body>
+
+<!-- HERO HEADER -->
+<header class="hero-header">
+    <div class="hero-content">
+        <img src="CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+        <h1 class="hero-title">ACCESSMED CONNECT</h1>
+        <p class="hero-tagline">~ Medicine & Medical Records Portal</p>
+        <p class="hero-sub">
+            Central Coalfields Limited <br>
+            <span>(A Subsidiary of Coal India Limited)</span>
+        </p>
+    </div>
+</header>
+
+<!-- NAVBAR -->
+<header class="portal-header">
+    <div class="welcome-text">
+        Welcome, <strong id="patient-name">—</strong>
+    </div>
+    <button id="btn-logout" class="logout-btn">Logout</button>
+</header>
+
+<!-- MAIN -->
+<main class="portal-container">
+
+    <!-- PATIENT INFO -->
+    <section class="card info-card">
+        <h3>Patient Information</h3>
+
+        <div class="info-grid">
+            <div>
+                <div class="label">Name</div>
+                <div class="value" id="patient-name">—</div>
+            </div>
+
+            <div>
+                <div class="label">Department</div>
+                <div class="value" id="patient-dept">—</div>
+            </div>
+
+            <div>
+                <div class="label">Designation</div>
+                <div class="value" id="patient-designation">—</div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button id="book-appointment" class="submit-btn ghost">
+                Book Appointment
+            </button>
+            <button id="request-meds" class="submit-btn ghost">
+                Request Medicine
+            </button>
+        </div>
+    </section>
+
+    <!-- TWO COLUMN GRID -->
+    <section class="grid-two-col">
+
+        <!-- LEFT COLUMN -->
+        <div class="col">
+
+            <div class="card equal-card">
+                <h3>Medical History</h3>
+                <ul class="list-box" id="history-list">
+                    <li class="empty">Loading medical history...</li>
+                </ul>
+            </div>
+
+            <div class="card equal-card">
+                <h3>Upcoming Appointments</h3>
+                <ul class="list-box" id="appointment-list">
+                    <li class="empty">Loading appointments...</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col">
+
+            <div class="card equal-card">
+                <h3>Doctor Availability</h3>
+                <ul class="list-box" id="doctor-list">
+                    <li class="empty">Loading doctor availability...</li>
+                </ul>
+            </div>
+
+            <div class="card equal-card">
+                <h3>Medicine Availability</h3>
+                <ul class="list-box" id="medicine-list">
+                    <li class="empty">Loading medicine data...</li>
+                </ul>
+            </div>
+
+            <div class="card equal-card">
+                <h3>Recent Reports</h3>
+                <ul class="list-box" id="report-list">
+                    <li class="empty">Loading reports...</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="portal-footer">
+    <div>© 2025 AccessMed Connect</div>
+    <div>Need help? <a href="/AccessMed-Connect/Landing-Page/support.html" class="link">Support</a></div>
+</footer>
+
+<!-- JS -->
+<script src="patient_portal.js"></script>
+
+</body>
+</html>
