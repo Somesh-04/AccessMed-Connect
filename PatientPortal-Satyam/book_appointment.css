@@ -1,0 +1,260 @@
+/* ============================
+   GLOBAL
+============================ */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, #6d28d9, #4f46e5 40%, #0f172a 90%);
+    color: #e5e7eb;
+    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+/* ============================
+   MAIN CONTAINER
+============================ */
+.portal-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+/* ============================
+   PAGE HEADER (NO HERO)
+============================ */
+.page-header {
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: rgba(15,23,42,0.75);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #a5b4fc;
+}
+
+/* ============================
+   CARD
+============================ */
+.card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* ============================
+   INFO GRID
+============================ */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.label {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+.value {
+    margin-top: 4px;
+    font-size: 17px;
+}
+
+/* ============================
+   FORM GRID
+============================ */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+label {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+/* ============================
+   INPUTS
+============================ */
+input,
+textarea,
+select {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: white;
+    font-size: 15px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #6366f1;
+}
+
+/* ============================
+   SELECT DOCTOR BUTTON
+============================ */
+.select-btn {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.select-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================
+   FORM ACTIONS
+============================ */
+.form-actions {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+/* ============================
+   SUBMIT BUTTON
+============================ */
+.submit-btn {
+    padding: 12px 26px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(99,102,241,0.55);
+    transition: 0.25s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(99,102,241,0.75);
+}
+
+.status {
+    font-size: 14px;
+}
+
+/* ============================
+   LIST
+============================ */
+.list-box {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.list-box li {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.empty {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* ============================
+   MODAL (DOCTOR POPUP)
+============================ */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-card {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(15,23,42,0.95);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+}
+
+.modal-card h3 {
+    margin-top: 0;
+}
+
+.close-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    background: #ef4444;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ============================
+   FOOTER
+============================ */
+.portal-footer {
+    max-width: 1000px;
+    margin: 30px auto 40px;
+    padding: 12px 20px;
+    background: rgba(11,17,32,0.6);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+}

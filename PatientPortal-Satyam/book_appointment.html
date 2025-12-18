@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Appointment – AccessMed Connect</title>
+    <link rel="stylesheet" href="book_appointment.css">
+</head>
+
+<body>
+
+<main class="portal-container">
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h2>Book Appointment</h2>
+        <p>Select department, then choose an available doctor</p>
+    </section>
+
+    <!-- PATIENT DETAILS -->
+    <section class="card">
+        <h3>Patient Details</h3>
+        <div class="info-grid">
+            <div>
+                <div class="label">Name</div>
+                <div class="value" id="patient-name">—</div>
+            </div>
+            <div>
+                <div class="label">Department</div>
+                <div class="value" id="patient-dept">—</div>
+            </div>
+            <div>
+                <div class="label">Patient ID</div>
+                <div class="value" id="patient-id">—</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPOINTMENT FORM -->
+    <section class="card">
+        <h3>Appointment Request</h3>
+
+        <form id="appointment-form" class="form-grid">
+
+            <!-- STEP 1: DEPARTMENT -->
+            <div class="form-group">
+                <label>Department</label>
+                <select id="department" required>
+                    <option value="">Loading departments...</option>
+                </select>
+            </div>
+
+            <!-- STEP 2: DOCTOR (POPUP TRIGGER) -->
+            <div class="form-group">
+                <label>Doctor</label>
+                <button type="button" id="select-doctor-btn" class="select-btn" disabled>
+                    Select Doctor
+                </button>
+                <input type="hidden" id="doctor-id">
+            </div>
+
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="date" id="appointment-date" required>
+            </div>
+
+            <div class="form-group full">
+                <label>Reason for Visit</label>
+                <textarea id="reason" rows="3" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                    Submit Appointment Request
+                </button>
+                <span id="form-status" class="status"></span>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- APPOINTMENT HISTORY -->
+    <section class="card">
+        <h3>My Appointments</h3>
+        <ul id="appointment-list" class="list-box">
+            <li class="empty">Loading appointments...</li>
+        </ul>
+    </section>
+
+</main>
+
+<!-- DOCTOR SELECTION MODAL -->
+<div id="doctor-modal" class="modal hidden">
+    <div class="modal-card">
+        <h3>Select Available Doctor</h3>
+        <ul id="doctor-list" class="list-box">
+            <li class="empty">Loading doctors...</li>
+        </ul>
+        <button class="close-btn" onclick="closeDoctorModal()">Close</button>
+    </div>
+</div>
+
+<footer class="portal-footer">
+    © 2025 AccessMed Connect
+</footer>
+
+<script src="book_appointment.js"></script>
+</body>
+</html>
