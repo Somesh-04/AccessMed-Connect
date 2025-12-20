@@ -21,7 +21,7 @@
         </div>
     </header>
 
-    <!-- AUTH SECTION -->
+    <!-- AUTH CONTAINER -->
     <section class="auth-container">
 
         <!-- TOGGLE -->
@@ -41,9 +41,26 @@
 
             <div class="form-row">
                 <label>Password</label>
+
                 <div class="password-box">
                     <input type="password" id="loginPass" required>
-                    <span onclick="togglePassword('loginPass')">👁️</span>
+
+                    <!-- CUSTOM BLACK EYE -->
+                    <svg
+                        class="eye-icon"
+                        onclick="togglePassword('loginPass', this)"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Toggle password visibility">
+
+                        <path
+                            d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7z"
+                            fill="none"
+                            stroke="#000"
+                            stroke-width="2"/>
+
+                        <circle cx="12" cy="12" r="3" fill="#000"/>
+                    </svg>
                 </div>
             </div>
 
@@ -72,9 +89,25 @@
 
             <div class="form-row">
                 <label>Password</label>
+
                 <div class="password-box">
                     <input type="password" id="signupPass" required>
-                    <span onclick="togglePassword('signupPass')">👁️</span>
+
+                    <!-- CUSTOM BLACK EYE -->
+                    <svg
+                        class="eye-icon"
+                        onclick="togglePassword('signupPass', this)"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+
+                        <path
+                            d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7z"
+                            fill="none"
+                            stroke="#000"
+                            stroke-width="2"/>
+
+                        <circle cx="12" cy="12" r="3" fill="#000"/>
+                    </svg>
                 </div>
             </div>
 
@@ -82,10 +115,6 @@
         </form>
 
     </section>
-
-    <div class="bottom-bar">
-        © 2025 AccessMed Connect | All Rights Reserved
-    </div>
 
     <script src="login.js"></script>
 </body>

@@ -18,6 +18,18 @@ body {
 }
 
 /* =============================
+   HIDE BROWSER DEFAULT EYE
+   ============================= */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+}
+
+/* =============================
    HERO HEADER (UNCHANGED)
    ============================= */
 .hero-header {
@@ -114,9 +126,9 @@ body {
 }
 
 .auth-form h2 {
-    text-align: left;
     font-size: 22px;
     font-weight: 700;
+    text-align: left;
 }
 
 /* LABEL + INPUT */
@@ -142,35 +154,48 @@ body {
     font-size: 15px;
 }
 
-/* PASSWORD */
+/* =============================
+   PASSWORD FIELD
+   ============================= */
 .password-box {
     display: flex;
     align-items: center;
     width: 100%;
     background: rgba(255,255,255,0.20);
     border-radius: 14px;
-    padding: 0 14px;
+    padding: 0 16px;
+    transition: background 0.25s ease;
+}
+
+.password-box.active {
+    background: rgba(0,0,0,0.35);
 }
 
 .password-box input {
-    flex: 1;                
+    flex: 1;
     padding: 14px 0;
     background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 15px;
 }
 
-.password-box span {
-    margin-left: 10px;          
+/* CUSTOM BLACK EYE */
+.eye-icon {
+    width: 22px;
+    height: 22px;
     cursor: pointer;
-    font-size: 16px;
-    opacity: 0.9;
+    margin-left: 12px;
+    flex-shrink: 0;
+    display: block;
+    opacity: 1;
+    transition: transform 0.2s ease;
 }
 
+.eye-icon:hover {
+    transform: scale(1.15);
+}
 
-/* BUTTON */
+/* =============================
+   BUTTON & LINKS
+   ============================= */
 .auth-form button {
     margin-top: 10px;
     padding: 14px;
@@ -186,16 +211,6 @@ body {
     background: #ffffff;
 }
 
-.bottom-bar {
-    width: 100%;
-    max-width: 980px;
-    text-align: center;
-    padding: 12px 0;
-    font-size: 12px;
-    color: #6b7280;
-}
-
-/* LINKS */
 .forgot {
     font-size: 14px;
     font-weight: 500;

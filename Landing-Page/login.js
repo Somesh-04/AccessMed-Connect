@@ -17,7 +17,15 @@ signupBtn.onclick = () => {
     loginForm.classList.add("hidden");
 };
 
-function togglePassword(id) {
-    const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
+function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    const box = icon.parentElement;
+
+    if (input.type === "password") {
+        input.type = "text";
+        box.classList.add("active");
+    } else {
+        input.type = "password";
+        box.classList.remove("active");
+    }
 }
