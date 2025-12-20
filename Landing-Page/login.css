@@ -158,13 +158,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
    PASSWORD FIELD
    ============================= */
 .password-box {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
     background: rgba(255,255,255,0.20);
     border-radius: 14px;
-    padding: 0 16px;
-    transition: background 0.25s ease;
+    padding: 0 16px 0 0;
+    overflow: hidden;
 }
 
 .password-box.active {
@@ -173,7 +174,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 .password-box input {
     flex: 1;
-    padding: 14px 0;
+    padding: 14px 16px;
     background: transparent;
 }
 
