@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessMed Connect | Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <!-- HERO HEADER (UNCHANGED) -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- AUTH SECTION -->
+    <section class="auth-container">
+
+        <!-- TOGGLE -->
+        <div class="auth-toggle">
+            <button id="loginBtn" class="active">Login</button>
+            <button id="signupBtn">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="auth-form">
+            <h2>Welcome Back</h2>
+
+            <div class="form-row">
+                <label>Employee ID / Email</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Password</label>
+                <div class="password-box">
+                    <input type="password" id="loginPass" required>
+                    <span onclick="togglePassword('loginPass')">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit">Login</button>
+            <p class="forgot">Forgot Password?</p>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signupForm" class="auth-form hidden">
+            <h2>Create Account</h2>
+
+            <div class="form-row">
+                <label>Full Name</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Employee ID</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Email</label>
+                <input type="email" required>
+            </div>
+
+            <div class="form-row">
+                <label>Password</label>
+                <div class="password-box">
+                    <input type="password" id="signupPass" required>
+                    <span onclick="togglePassword('signupPass')">👁️</span>
+                </div>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+    </section>
+
+    <script src="login.js"></script>
+</body>
+</html>
