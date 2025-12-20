@@ -186,6 +186,15 @@ body {
     background: #ffffff;
 }
 
+.bottom-bar {
+    width: 100%;
+    max-width: 980px;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
 /* LINKS */
 .forgot {
     font-size: 14px;
