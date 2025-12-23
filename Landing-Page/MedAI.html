@@ -1,0 +1,56 @@
+<div class="medai-layout">
+
+  <!-- SIDEBAR -->
+<aside class="history-panel">
+  <h3>🕘 History</h3>
+  <ul id="historyList"></ul>
+</aside>
+
+<button id="sidebarToggle" aria-label="Toggle sidebar">
+  ☰
+</button>
+
+  <!-- MAIN CONTENT -->
+  <main class="medai-main">
+    
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MedAI | AccessMed Connect</title>
+<link rel="stylesheet" href="./MedAI.css">
+</head>
+<body>
+
+    <!-- Sidebar Toggle Button -->
+
+
+<header class="hero-header">
+  <div class="hero-content">
+    <img src="CCL.png" class="hero-logo" />
+    <h1 class="hero-title">MedAI Assistant</h1>
+    <p class="hero-tagline">AI-powered Medical Triage</p>
+    <p class="hero-sub">Central Coalfields Limited</p>
+  </div>
+</header>
+
+<div class="ref-card-container">
+  <div class="ref-card">
+    <h3>🧠 Describe your symptoms</h3>
+
+    <textarea id="symptoms"
+      placeholder="Example: severe stomach pain with vomiting since morning"
+    ></textarea>
+
+    <button id="analyzeBtn">Analyze with MedAI</button>
+
+    <div id="resultBox" class="hidden"></div>
+
+    <p class="note">
+      MedAI is an AI assistant, not a doctor. This is not a diagnosis.
+    </p>
+  </div>
+</div>
+<script src="MedAI.js"></script>
+</body>
+</html>
