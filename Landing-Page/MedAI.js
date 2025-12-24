@@ -66,16 +66,21 @@ analyzeBtn?.addEventListener("click", async () => {
   analyzeBtn.innerText = "Analyzing…";
   analyzeBtn.disabled = true;
 
+  // ✅ CHANGED: use FormData instead of JSON
+  const formData = new FormData();
+  formData.append("symptoms_text", text);
+
+  if (reportInput && reportInput.files.length > 0) {
+    formData.append("report_file", reportInput.files[0]);
+  }
+
   try {
-    // ⚠️ Backend API placeholder
-    const res = await fetch("http://127.0.0.1:8000/api/catbot/triage", {
+    const res = await fetch("http://127.0.0.1:8000/api/medai/analyze", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: "EMP001",
-        symptoms_text: text
-      })
+      body: formData   // ✅ CHANGED
     });
+
+    if (!res.ok) throw new Error("Backend error");
 
     const data = await res.json();
 
@@ -90,11 +95,34 @@ analyzeBtn?.addEventListener("click", async () => {
 
   } catch (err) {
     alert("MedAI service unavailable. Try again later.");
+    console.error(err);
   } finally {
     analyzeBtn.innerText = "Analyze with MedAI";
     analyzeBtn.disabled = false;
   }
 });
+
+/* ------------------------------
+   Add Report (File Upload Trigger)
+------------------------------ */
+
+const addReportBtn = document.querySelector(".add-report-btn");
+const reportInput = document.getElementById("reportInput");
+
+if (addReportBtn && reportInput) {
+  addReportBtn.addEventListener("click", () => {
+    reportInput.click();
+  });
+
+  reportInput.addEventListener("change", () => {
+    if (reportInput.files.length > 0) {
+      const fileName = reportInput.files[0].name;
+      addReportBtn.textContent = "✔";
+      addReportBtn.title = `Attached: ${fileName}`;
+    }
+  });
+}
+
 
 /* ------------------------------
    5. Sidebar History (ChatGPT-like)
