@@ -86,10 +86,12 @@ analyzeBtn?.addEventListener("click", async () => {
 
     resultBox.className = `result-${data.priority}`;
     resultBox.innerHTML = `
-      <b>Severity:</b> ${data.priority.toUpperCase()}<br><br>
-      <b>Specialist:</b> ${data.suggested_speciality}<br><br>
-      ${data.message}
-    `;
+  <b>Severity:</b> ${data.priority.toUpperCase()}<br><br>
+  <b>Recommended Doctor:</b> ${data.doctor.name}<br>
+  <b>Department:</b> ${data.doctor.department}<br>
+  <b>Room:</b> ${data.doctor.room}<br><br>
+  ${data.message}
+`;
 
     saveToHistory(text, data);
 
@@ -136,10 +138,24 @@ function loadHistory() {
   const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
   historyList.innerHTML = "";
 
-  history.forEach(item => {
+  history.forEach((item, index) => {
     const li = document.createElement("li");
     li.textContent = item.symptoms.slice(0, 30) + "...";
+
     li.onclick = () => showHistoryItem(item);
+
+    const del = document.createElement("span");
+    del.className = "delete-btn";
+    del.innerHTML = "×";
+
+    del.onclick = (e) => {
+      e.stopPropagation(); // prevent loading the history item
+      history.splice(index, 1);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+      loadHistory();
+    };
+
+    li.appendChild(del);
     historyList.appendChild(li);
   });
 }
@@ -147,7 +163,7 @@ function loadHistory() {
 function saveToHistory(symptoms, result) {
   const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
   history.unshift({
-    symptoms,
+    symptoms: symptoms.charAt(0).toUpperCase() + symptoms.slice(1),
     result,
     time: new Date().toLocaleString()
   });
@@ -159,10 +175,12 @@ function saveToHistory(symptoms, result) {
 function showHistoryItem(item) {
   resultBox.className = `result-${item.result.priority}`;
   resultBox.innerHTML = `
-    <b>Severity:</b> ${item.result.priority.toUpperCase()}<br><br>
-    <b>Specialist:</b> ${item.result.suggested_speciality}<br><br>
-    ${item.result.message}
-  `;
+  <b>Severity:</b> ${item.result.priority.toUpperCase()}<br><br>
+  <b>Recommended Doctor:</b> ${item.result.doctor.name}<br>
+  <b>Department:</b> ${item.result.doctor.department}<br>
+  <b>Room:</b> ${item.result.doctor.room}<br><br>
+  ${item.result.message}
+`;
 }
 
 loadHistory();

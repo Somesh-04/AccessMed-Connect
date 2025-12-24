@@ -189,53 +189,44 @@ button {
   max-width: 1200px;
   margin-left: 0; /* IMPORTANT */
 }
-
 /* ===== Sidebar ===== */
 .history-panel {
   position: fixed;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 320px;
   height: 100vh;
 
   background: rgba(15,23,42,.85);
   border-radius: 0px 18px 18px 0px;
-  padding: 16px 16px 16px 200px;
+  padding: 16px;
   box-shadow: 0 12px 30px rgba(0,0,0,.6);
 
   overflow: hidden; /* NO SCROLLBAR */
   transform: translateX(0);          /* visible */
   transition: transform 0.3s ease;  /* smooth swipe */
-
 }
 .sidebar-hidden .history-panel {
   transform: translateX(-100%);
 }
-
 .history-panel h3 {
-  font-size: 15px;
-  margin-bottom: 12px;
-  color: #a5b4fc;
-}
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
+  font-size: 17px;
+  font-weight: 600;
+  color: #c7d2fe;
+
+  padding-left: 2px;
+  margin-top: 36px;
+}
 .history-panel ul {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
   list-style: none;
 }
-
-.history-panel li {
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: rgba(255,255,255,.06);
-  margin-bottom: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: .2s;
-}
-
-.history-panel li:hover {
-  background: rgba(99,102,241,.25);
-}
-
 /* ===== Main ===== */
 .medai-main {
   flex: 1;
@@ -250,7 +241,7 @@ button {
 }
 
 
-/* ===== Sidebar Toggle Button (Attached) ===== */
+/* ===== Sidebar Toggle Button ===== */
 #sidebarToggle {
   position: fixed;
   top: 0px;
@@ -295,4 +286,103 @@ button {
   width: 120px;
   height: auto;
   opacity: 0.95;
+}
+
+.history-panel li .delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+
+  display: grid;
+  place-items: center; /* 👈 better than flex here */
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+
+  opacity: 0;
+  cursor: pointer;
+
+  line-height: 0.6;          /* 👈 CRITICAL */
+  padding-bottom: 0.6px;    /* 👈 micro vertical correction */
+
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.history-panel li:hover .delete-btn {
+  opacity: 1;
+}
+
+.history-panel li .delete-btn:hover {
+  background: rgba(239,68,68,0.25); /* red hint */
+  color: #fecaca;
+}
+/* ===== Result Box Polish ===== */
+#resultBox {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+/* Disclaimer separation */
+.result-disclaimer {
+  margin-top: 12px;
+  padding-top: 10px;
+  font-size: 12px;
+  opacity: 0.75;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ===== History Item (Merged & Clean) ===== */
+.history-panel li {
+  /* layout */
+  height: 34px;
+  width: 100%;
+  padding: 12px 36px 12px 14px; /* right space for delete icon */
+  margin-bottom: 4px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  /* typography */
+  font-size: 13px;
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  letter-spacing: 0.2px;
+
+  /* text behavior */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* visuals */
+  background: rgba(255,255,255,.06);
+  cursor: pointer;
+
+  /* animation */
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+/* Clean hover effect (no sticky illusion) */
+.history-panel li:hover {
+  background-color: rgba(99,102,241,0.22);
+}
+
+.history-panel li:not(:hover) {
+  background-color: rgba(255,255,255,.06);
+  box-shadow: none;
 }
