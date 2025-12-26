@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top left, #6d28d9, #4f46e5 40%, #0f172a 90%);
+    color: #e5e7eb;
+}
+
+/* HERO */
+.hero-header {
+    max-width: 980px;
+    margin: 30px auto;
+    padding: 40px;
+    background: rgba(15,23,42,0.85);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 34px;
+}
+
+.hero-tagline {
+    color: #a5b4fc;
+    margin-top: 6px;
+}
+
+.hero-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* NAV */
+.main-nav {
+    max-width: 980px;
+    margin: auto;
+    padding: 14px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: rgba(15,23,42,0.7);
+    border-radius: 18px;
+}
+
+.nav-pill {
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 12px;
+    transition: 0.25s;
+}
+
+.nav-pill:hover,
+.nav-pill.active {
+    background: rgba(99,102,241,0.25);
+}
+
+.logout-btn {
+    margin-left: auto;
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+/* CONTENT */
+.content-section {
+    max-width: 980px;
+    margin: 30px auto;
+    display: none;
+}
+
+.card-row {
+    display: flex;
+    gap: 20px;
+}
+
+.info-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
+}
+
+.glass-card {
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+}
+
+.glass-card h2 {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-top: 14px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: none;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.primary-btn {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+    max-width: 980px;
+    margin: 40px auto 10px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    background: #0b1120;
+    border-radius: 20px;
+}
+
+.bottom-bar {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 20px;
+}
