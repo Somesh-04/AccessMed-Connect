@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AccessMed Connect | Reception Portal</title>
+    <link rel="stylesheet" href="reception.css">
+</head>
+
+<body>
+
+
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <h1 class="hero-title">RECEPTION PORTAL</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+<!-- NAVBAR -->
+<nav class="main-nav">
+    <a class="nav-pill active" onclick="switchSection('dashboard', this)">Dashboard</a>
+    <a class="nav-pill" id="bookNav"style="display:none"onclick="switchSection('appointment', this)">Book Appointment</a>
+    <a class="nav-pill" onclick="switchSection('patients', this)">Patients</a>
+    <a class="nav-pill" onclick="switchSection('doctors', this)">Doctors</a>
+    <a class="nav-pill" href="support.html">Support</a>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</nav>
+
+<!-- CONTENT -->
+
+<section id="dashboard" class="content-section">
+    <div class="card-row">
+        <div class="info-card clickable" onclick="openAppointment()">📅 Book Appointment</div>
+        <div class="info-card">👨‍⚕️ Doctors on Duty</div>
+        <div class="info-card">📁 Patient Records</div>
+    </div>
+</section>
+
+<section id="appointment" class="content-section">
+    <div class="glass-card">
+        <h2>Book Appointment</h2>
+
+        <label>Department</label>
+        <select>
+            <option>-- Choose --</option>
+            <option>General Physician</option>
+            <option>Pediatrician</option>
+            <option>Dermatologist</option>
+        </select>
+
+        <label>Doctor</label>
+        <select>
+            <option>Select department first</option>
+        </select>
+
+        <label>Patient Name</label>
+        <input type="text">
+
+        <div class="row">
+            <div>
+                <label>Date</label>
+                <input type="date">
+            </div>
+            <div>
+                <label>Time</label>
+                <input type="time">
+            </div>
+        </div>
+
+        <button class="primary-btn">Confirm Appointment</button>
+    </div>
+</section>
+
+<section id="patients" class="content-section">
+    <div class="glass-card">
+        <h2>Patients</h2>
+        <p>Patient list will load from backend.</p>
+    </div>
+</section>
+
+<section id="doctors" class="content-section">
+    <div class="glass-card">
+        <h2>Doctors</h2>
+        <p>Doctor schedules & availability.</p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div>
+        <h3>Contact</h3>
+        <p>Phone: +91 9876543210</p>
+        <p>Email: info@accessmed.com</p>
+    </div>
+    <div>
+        <h3>Quick Links</h3>
+        <p>Home • Emergency • Support</p>
+    </div>
+    <div>
+        <h3>Working Hours</h3>
+        <p>24 × 7</p>
+    </div>
+</footer>
+
+<div class="bottom-bar">
+    © 2025 AccessMed Connect | All Rights Reserved
+</div>
+
+<script src="reception.js"></script>
+</body>
+</html>
