@@ -5,6 +5,12 @@
             "name": "http://127.0.0.1:3000/Bidisha's/index.html",
             "request": "launch",
             "url": "http://127.0.0.1:3000/Bidisha's/index.html"
+        },
+        {
+            "type": "chrome",
+            "name": "http://127.0.0.1:3000/Reception-Portal-Bidisha/reception.html",
+            "request": "launch",
+            "url": "http://127.0.0.1:3000/Reception-Portal-Bidisha/reception.html"
         }
     ]
 }
