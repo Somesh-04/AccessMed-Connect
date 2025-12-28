@@ -57,12 +57,14 @@ window.addEventListener("load", revealOnScroll);
 const analyzeBtn = document.getElementById("analyzeBtn");
 const symptomsInput = document.getElementById("symptoms");
 const resultBox = document.getElementById("resultBox");
+const appointmentCTA = document.getElementById("appointmentCTA");
 
 analyzeBtn?.addEventListener("click", async () => {
   const text = symptomsInput.value.trim();
   if (!text) return alert("Please describe your symptoms");
 
   resultBox.className = "hidden";
+  appointmentCTA?.classList.add("hidden");
   analyzeBtn.innerText = "Analyzing…";
   analyzeBtn.disabled = true;
 
@@ -94,6 +96,8 @@ analyzeBtn?.addEventListener("click", async () => {
 `;
 
     saveToHistory(text, data);
+    appointmentCTA?.classList.remove("hidden");
+
 
   } catch (err) {
     alert("MedAI service unavailable. Try again later.");
@@ -193,4 +197,11 @@ const bodyEl = document.body;
 
 sidebarToggle.addEventListener("click", () => {
   bodyEl.classList.toggle("sidebar-hidden");
+});
+
+const appointmentCTAEl = document.getElementById("appointmentCTA");
+
+appointmentCTAEl?.addEventListener("click", () => {
+  // 🔗 Simple redirect to appointment portal
+  window.location.href = "../PatientPortal-Satyam/book_appointment.html";
 });
