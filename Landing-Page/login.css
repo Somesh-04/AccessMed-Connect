@@ -144,6 +144,38 @@ input[type="password"]::-webkit-textfield-decoration-container {
     color: #f1f5ff;
 }
 
+.auth-form select {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.20);
+    color: white;
+    font-size: 15px;
+    appearance: none;
+}
+
+/* Dropdown list background */
+.auth-form select option {
+    background: #6d5ce7;
+    color: #ffffff;
+}
+
+/* When an option is hovered */
+.auth-form select option:hover {
+    background: #6d5ce7;
+    color: #a5b4fc;
+}
+
+/* When an option is selected */
+.auth-form select option:checked {
+    background: #6d5ce7;
+    color: #ffffff;
+}
+
+
+
 .auth-form input {
     padding: 14px 16px;
     border-radius: 14px;
