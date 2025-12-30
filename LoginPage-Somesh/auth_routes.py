@@ -58,10 +58,10 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 400
 
     redirects = {
-        "Doctor": "/doctor/index.html",
+        "Doctor": "/Doctor-portal-Aastha/frontend/doctor-portal.html",
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
-        "Receptionist": "/reception/index.html",
-        "Chemist": "/chemist/index.html",
+        "Receptionist": "/ReceptionPortal-Satyam/templates/reception.html",
+        "Chemist": "Chemist-portal-Aastha/frontend/dispensary.html",
     }
 
     return jsonify({"redirect_to": redirects.get(user.role, "/")})
