@@ -61,7 +61,7 @@ def login():
         "Doctor": "/Doctor-portal-Aastha/frontend/doctor-portal.html",
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
         "Receptionist": "/ReceptionPortal-Satyam/templates/reception.html",
-        "Chemist": "Chemist-portal-Aastha/frontend/dispensary.html",
+        "Chemist": "/Chemist-portal-Aastha/frontend/dispensary.html",
     }
 
     return jsonify({"redirect_to": redirects.get(user.role, "/")})
