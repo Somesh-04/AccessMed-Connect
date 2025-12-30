@@ -32,12 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
    RENDER FUNCTIONS
 ===================== */
 
-function renderPatient(data) {
-    setText("patient-name", data.name);
-    setText("patient-dept", data.department);
-    setText("patient-id", data.id);
+/* ➤ PATIENT DETAILS */
+function renderPatient(user) {
+    if (!user) return;
+
+    setText("patient-name", user.full_name);
+    setText("patient-emp-id", user.user_id);
+    setText("patient-email", user.email);
 }
 
+/* ➤ REQUEST HISTORY */
 function renderRequests(requests = []) {
     const list = document.getElementById("request-list");
     list.innerHTML = "";

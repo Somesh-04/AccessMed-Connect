@@ -2,11 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
     setEmptyState("appointment-list", "No appointments found");
 });
 
+
 /* ============================
    RENDER FUNCTIONS (BACKEND)
 ============================ */
 
-/* Departments */
+/* ➤ PATIENT DETAILS */
+function renderPatient(user) {
+    if (!user) return;
+
+    setText("patient-name", user.full_name);
+    setText("patient-emp-id", user.user_id);
+    setText("patient-email", user.email);
+}
+
+/* ➤ DEPARTMENTS */
 function renderDepartments(departments = []) {
     const select = document.getElementById("department");
     select.innerHTML = `<option value="">Select department</option>`;
@@ -23,7 +33,7 @@ function renderDepartments(departments = []) {
     };
 }
 
-/* Doctors (TODAY ONLY) */
+/* ➤ DOCTORS (TODAY ONLY) */
 function renderDoctors(doctors = []) {
     const list = document.getElementById("doctor-list");
     list.innerHTML = "";
@@ -43,6 +53,7 @@ function renderDoctors(doctors = []) {
         list.appendChild(li);
     });
 }
+
 
 /* ============================
    MODAL CONTROL
@@ -68,9 +79,15 @@ function selectDoctor(id, name) {
     closeDoctorModal();
 }
 
+
 /* ============================
    UTILITIES
 ============================ */
+
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value ?? "—";
+}
 
 function setEmptyState(id, msg) {
     document.getElementById(id).innerHTML = `<li class="empty">${msg}</li>`;

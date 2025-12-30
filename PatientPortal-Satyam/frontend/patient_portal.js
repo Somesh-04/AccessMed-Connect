@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
        QUICK ACTION BUTTONS
     ============================ */
 
-    // ➤ Book Appointment
     const bookBtn = document.getElementById("book-appointment");
     if (bookBtn) {
         bookBtn.addEventListener("click", () => {
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ➤ Request Medicine
     const medsBtn = document.getElementById("request-meds");
     if (medsBtn) {
         medsBtn.addEventListener("click", () => {
@@ -33,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ============================
        DEFAULT EMPTY STATES
-       (UI NEVER BREAKS)
     ============================ */
     setEmptyState("doctor-list", "No doctors available today");
     setEmptyState("medicine-list", "No medicine data available");
@@ -45,16 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ==================================================
    RENDER FUNCTIONS
-   BACKEND WILL CALL THESE (DO NOT FETCH HERE)
+   BACKEND WILL CALL THESE
 ================================================== */
 
 /* ➤ PATIENT DETAILS */
-function renderPatient(patient) {
-    if (!patient) return;
+function renderPatient(user) {
+    if (!user) return;
 
-    setText("patient-name", patient.name);
-    setText("patient-dept", patient.department);
-    setText("patient-designation", patient.designation);
+    setText("welcome-name", user.full_name);
+    setText("patient-name", user.full_name);
+    setText("patient-emp-id", user.user_id);
+    setText("patient-email", user.email);
 }
 
 /* ➤ DOCTOR AVAILABILITY */
@@ -114,7 +112,7 @@ function renderHistory(history = []) {
     });
 }
 
-/* ➤ UPCOMING APPOINTMENTS (IMPORTANT) */
+/* ➤ UPCOMING APPOINTMENTS */
 function renderAppointments(appointments = []) {
     const list = document.getElementById("appointment-list");
     if (!list) return;
@@ -154,7 +152,7 @@ function renderReports(reports = []) {
 
 
 /* ============================
-   UTILITIES (DO NOT BREAK)
+   UTILITIES
 ============================ */
 
 function setText(id, value) {
