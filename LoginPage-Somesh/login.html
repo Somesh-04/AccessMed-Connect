@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessMed Connect | Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <!-- HERO HEADER (UNCHANGED) -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="/Chemist-portal-Aastha/frontend/CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- AUTH CONTAINER -->
+    <section class="auth-container">
+
+        <!-- TOGGLE -->
+        <div class="auth-toggle">
+            <button id="loginBtn" class="active">Login</button>
+            <button id="signupBtn">Sign Up</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="auth-form">
+            <h2>Welcome Back</h2>
+
+            <div class="form-row">
+                <label>Employee ID / Email</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Password</label>
+
+                <div class="password-box">
+                    <input type="password" id="loginPass" required>
+
+                    <!-- CUSTOM BLACK EYE -->
+                    <svg
+                        class="eye-icon"
+                        onclick="togglePassword('loginPass', this)"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Toggle password visibility">
+
+                        <path
+                            d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7z"
+                            fill="none"
+                            stroke="#000"
+                            stroke-width="2"/>
+
+                        <circle cx="12" cy="12" r="3" fill="#000"/>
+                    </svg>
+                </div>
+            </div>
+
+            <button type="submit">Login</button>
+            <p class="forgot">Forgot Password?</p>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signupForm" class="auth-form hidden">
+            <h2>Create Account</h2>
+
+            <div class="form-row">
+                <label>Full Name</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Employee ID</label>
+                <input type="text" required>
+            </div>
+
+            <div class="form-row">
+                <label>Role</label>
+
+                <select required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="Patient">Patient</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Dispensary Manager">Chemist</option>
+                <option value="Receptionist">Receptionist</option>
+                </select>
+            </div>
+
+
+            <div class="form-row">
+                <label>Email</label>
+                <input type="email" required>
+            </div>
+
+            <div class="form-row">
+                <label>Password</label>
+
+                <div class="password-box">
+                    <input type="password" id="signupPass" required>
+
+                    <!-- CUSTOM BLACK EYE -->
+                    <svg
+                        class="eye-icon"
+                        onclick="togglePassword('signupPass', this)"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+
+                        <path
+                            d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7z"
+                            fill="none"
+                            stroke="#000"
+                            stroke-width="2"/>
+
+                        <circle cx="12" cy="12" r="3" fill="#000"/>
+                    </svg>
+                </div>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+    </section>
+
+    <div class="bottom-bar">
+        © 2025 AccessMed Connect | All Rights Reserved
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
