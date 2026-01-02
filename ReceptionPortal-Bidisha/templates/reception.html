@@ -2,172 +2,223 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AccessMed Connect – Reception Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/reception.css') }}">
+    <title>Reception Portal</title>
+    <link rel="stylesheet" href="../static/css/reception.css">
 </head>
 
 <body>
 
-<header class="hero-header">
-    <div class="hero-content">
-        <img src="{{ url_for('static', filename='images/CCL.png') }}" alt="AccessMed Connect Logo" class="hero-logo">
-        <h1 class="hero-title">RECEPTION PORTAL</h1>
-        <p class="hero-tagline">Efficient Patient Management</p>
-        <p class="hero-sub">Central Coalfields Limited</p>
+<!-- FULL PAGE BACKGROUND -->
+<div class="page-bg">
+
+    <!-- HEADER -->
+    <header class="hero-header">
+        <div class="header-inner">
+            <img src="../static/images/CCL.png" class="hero-logo">
+            <h1>RECEPTION PORTAL</h1>
+            <p>Efficient Patient Management</p>
+            <p>Central Coalfields Limited</p>
+        </div>
+    </header>
+
+    <!-- CONTENT WIDTH -->
+    <div class="content-wrapper">
+
+        <!-- NAVBAR -->
+        <nav class="nav-bar">
+            <button class="nav-pill active" onclick="showSection('dashboard', this)">Dashboard</button>
+            <button class="nav-pill" onclick="showSection('doctors', this)">Doctors</button>
+            <button class="nav-pill" onclick="showSection('appointments', this)">Active Appointments</button>
+            <button class="nav-pill" onclick="showSection('book', this)">Book Appointment</button>
+        </nav>
+
+        <!-- MAIN -->
+        <main class="dashboard">
+
+            <!-- DASHBOARD -->
+            <section id="dashboard" class="panel visible">
+                <h2>Dashboard Overview</h2>
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h3>Total Doctors</h3>
+                        <p id="totalDoctors">--</p>
+</div>
+                    <div class="dash-card">
+                        <h3>Appointments Today</h3>
+                        <p id="appointmentsToday">--</p>
+</div>
+                    <div class="dash-card">
+                        <h3>Patients Waiting</h3>
+                        <p id="patientsWaiting">--</p>
+</div>
+                    <div class="dash-card">
+                        <h3>Currently Serving</h3>
+                        <p id="currentlyServing">--</p>
+</div>
+                </div>
+            </section>
+
+            <!-- DOCTORS -->
+            <section id="doctors" class="panel">
+                <h2>Active Doctors Today</h2>
+
+                <table id="activeDoctorsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- ACTIVE APPOINTMENTS -->
+            <section id="appointments" class="panel">
+                <h2>Today's Appointments</h2>
+
+                <table id="appointmentsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+
+            <!-- BOOK APPOINTMENT -->
+            <section id="book" class="panel">
+                <h2>Book New Appointment</h2>
+
+                <form class="booking-form" onsubmit="bookAppointment(event)">
+
+                    <!-- Patient ID -->
+                    <label>Patient ID
+                        <input type="text" id="patientId" required placeholder="Patient ID">
+                    </label>
+
+                    <!-- Patient Name -->
+                    <label>Patient Name
+                        <input type="text" id="patientName" required placeholder="Use Uppercase Letters">
+                    </label>
+
+                    <!-- Employee Name if Dependent -->
+                    <label id="employeeNameLabel" style="display:none;">Employee Name
+                        <input type="text" id="employeeName" placeholder="Employee Full Name">
+                    </label>
+
+                    <!-- Department -->
+                    <label>Department
+                        <select id="departmentSelect" required onchange="loadDoctorsForDepartment()">
+                            <option value="">Loading...</option>
+                        </select>
+                    </label>
+
+                    <!-- Doctor -->
+                    <label>Doctor
+                        <select id="doctorSelect" required disabled>
+                            <option value="">Select Department First</option>
+                        </select>
+                    </label>
+
+                    <!-- Appointment Date -->
+                    <label>Appointment Date
+                        <input type="date" id="appointmentDate" required>
+                    </label>
+
+                    <!-- Reason -->
+                    <label>Reason for Visit
+                        <input type="text" id="reason" required placeholder="Reason for Visit">
+                    </label>
+
+                    <button type="submit" class="primary-btn">Book Appointment</button>
+                </form>
+            </section>
+
+        </main>
+
     </div>
-</header>
-    
-</head>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2025 AccessMed Connect — Central Coalfields Limited
+    </footer>
 
-<!-- ================= NAV ================= -->
-<nav class="nav-bar">
-    <button class="nav-pill active" onclick="switchSection('dashboard', this)">Dashboard</button>
-    <button class="nav-pill" onclick="switchSection('book', this)">Book Appointment</button>
-    <button class="nav-pill" onclick="switchSection('doctors', this)">Doctors</button>
-    <button class="nav-pill" onclick="switchSection('active', this)">Active Appointments</button>
-</nav>
+</div>
 
-<!-- ================= CONTENT ================= -->
-<main class="main-content">
+<!-- ===================== -->
+<!--        SCRIPTS        -->
+<!-- ===================== -->
 
-    <!-- ===== DASHBOARD ===== -->
-    <section id="dashboard" class="content-section">
+<script>
+/* NAVIGATION */
+function showSection(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById(id).classList.add('visible');
 
-        <div class="card-grid">
+    document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
 
-            <div class="feature-card">
-                <div class="card-title">Today’s Appointments</div>
-                <div class="card-metric">{{ appointments|length }}</div>
-                <div class="card-sub">Scheduled Visits</div>
-            </div>
+/* LOAD DEPARTMENTS FROM DB */
+async function loadDepartments() {
+    const res = await fetch("/api/departments");
+    const data = await res.json();
 
-            <div class="feature-card">
-                <div class="card-title">Doctors On Duty</div>
-                <div class="card-metric">{{ doctors|length }}</div>
-                <div class="card-sub">Available Now</div>
-            </div>
+    const dept = document.getElementById("departmentSelect");
 
-            <div class="feature-card wide">
-                <div class="card-title">Next Appointment</div>
-                <div class="card-metric">{% if appointments %}{{ appointments[0].time.strftime('%I:%M %p') }}{% else %}None{% endif %}</div>
-                <div class="card-sub">{% if appointments %}{{ appointments[0].department.name }}{% else %}No Appointments{% endif %}</div>
-            </div>
+    dept.innerHTML = `
+        <option value="">Select Department</option>
+        ${data.map(d => `<option value="${d.id}">${d.name}</option>`).join("")}
+    `;
+}
 
-            <div class="feature-card wide">
-                <div class="card-title">Pending Registrations</div>
-                <div class="card-metric">3</div>
-                <div class="card-sub">Waiting at Reception</div>
-            </div>
+/* LOAD DOCTORS BY DEPARTMENT AVAILABLE TODAY */
+async function loadDoctorsForDepartment() {
 
-        </div>
-    </section>
+    const deptId = document.getElementById("departmentSelect").value;
+    const doctorSelect = document.getElementById("doctorSelect");
 
-    <!-- ===== BOOK APPOINTMENT ===== -->
-    <section id="book" class="content-section" style="display:none;">
-        <div class="glass-card">
-            <h2>Book Appointment</h2>
-            <form method="POST" action="{{ url_for('book_appointment') }}">
-                <div class="form-row">
-                    <label for="patient_type">Patient Type:</label>
-                    <select name="patient_type" id="patient_type" onchange="togglePatientSelect()">
-                        <option value="employee">Employee</option>
-                        <option value="dependent">Dependent</option>
-                    </select>
-                </div>
+    if (!deptId) {
+        doctorSelect.innerHTML = `<option>Select Department First</option>`;
+        doctorSelect.disabled = true;
+        return;
+    }
 
-                <div id="employee_select" class="form-row">
-                    <label for="employee_id">Employee:</label>
-                    <select name="employee_id">
-                        {% for emp in employees %}
-                        <option value="{{ emp.id }}">{{ emp.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+    const res = await fetch(`/api/doctors-by-department/${deptId}`);
+    const data = await res.json();
 
-                <div id="dependent_select" class="form-row" style="display:none;">
-                    <label for="dependent_id">Dependent:</label>
-                    <select name="dependent_id">
-                        {% for dep in dependents %}
-                        <option value="{{ dep.id }}">{{ dep.name }} ({{ dep.employee.name }})</option>
-                        {% endfor %}
-                    </select>
-                </div>
+    if (!data.length) {
+        doctorSelect.innerHTML = `<option>No doctors available today</option>`;
+        doctorSelect.disabled = true;
+        return;
+    }
 
-                <div class="form-row">
-                    <label for="department_id">Department:</label>
-                    <select name="department_id" id="department_id" onchange="filterDoctors()">
-                        <option value="">Select Department</option>
-                        {% for dept in departments %}
-                        <option value="{{ dept.id }}">{{ dept.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+    doctorSelect.disabled = false;
 
-                <div class="form-row">
-                    <label for="doctor_id">Doctor:</label>
-                    <select name="doctor_id" id="doctor_id">
-                        <option value="">Select Doctor</option>
-                        {% for doc in doctors %}
-                        <option value="{{ doc.id }}" data-dept="{{ doc.department_id }}">{{ doc.name }} ({{ doc.department.name }})</option>
-                        {% endfor %}
-                    </select>
-                </div>
+    doctorSelect.innerHTML = `
+        <option value="">Select Doctor</option>
+        ${data.map(d => `<option value="${d.id}">${d.name}</option>`).join("")}
+    `;
+}
 
-                <div class="form-row">
-                    <label for="date">Date:</label>
-                    <input type="date" name="date" required>
-                </div>
+/* BOOK APPOINTMENT (frontend only; backend insert needed) */
+async function bookAppointment(e){
+    e.preventDefault();
 
-                <div class="form-row">
-                    <label for="time">Time:</label>
-                    <input type="time" name="time" required>
-                </div>
+    // TODO: connect this to your /api/book endpoint when ready
 
-                <button type="submit" class="primary-btn">Book Appointment</button>
-            </form>
-        </div>
-    </section>
+    alert("Appointment booking will be submitted to backend here.");
+}
 
-    <!-- ===== DOCTORS ===== -->
-    <section id="doctors" class="content-section" style="display:none;">
-        <div class="glass-card">
-            <h2>Doctors</h2>
-            <ul>
-                {% for doc in doctors %}
-                <li>{{ doc.name }} - {{ doc.department.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
+/* INITIAL LOAD CALLS */
+loadDepartments();
 
-    <!-- ===== ACTIVE APPOINTMENTS ===== -->
-    <section id="active" class="content-section" style="display:none;">
-        <div class="glass-card">
-            <h2>Active Appointments</h2>
-            <ul>
-                {% for appt in appointments %}
-                <li>{{ appt.patient_name }} - {{ appt.doctor.name }} ({{ appt.department.name }}) - {{ appt.date }} {{ appt.time }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
-
-</main>
-<footer class="footer-min">
-    <div class="footer-content">
-        <p>&copy; 2025 AccessMed Connect. All rights reserved.</p>
-        <p>Central Coalfields Limited</p>
-    </div>
-</footer>
-
-
-<script src="{{ url_for('static', filename='js/reception.js') }}"></script>
-
-
+</script>
 
 </body>
 </html>
-
-
