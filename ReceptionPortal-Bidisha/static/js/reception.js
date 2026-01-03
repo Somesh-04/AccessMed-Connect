@@ -1,44 +1,32 @@
-// ================= SECTION SWITCHING =================
-function switchSection(sectionId, btn) {
-    // Hide all sections
-    document.querySelectorAll(".content-section").forEach(section => {
-        section.style.display = "none";
-    });
+function openSection(id) {
+    document.querySelectorAll(".section-content").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 
-    // Remove 'active' class from all nav pills
-    document.querySelectorAll(".nav-pill").forEach(pill => {
-        pill.classList.remove("active");
-    });
-
-    // Show selected section
-    const section = document.getElementById(sectionId);
-    if (section) section.style.display = "block";
-
-    // Add 'active' class to clicked button
-    btn.classList.add("active");
+    document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+    event.target.classList.add("active");
 }
 
-// ================= PATIENT TYPE TOGGLE =================
-function filterDoctors() {
-    const deptId = document.getElementById("department_id").value;
-    const doctorSelect = document.getElementById("doctor_id");
-    const options = doctorSelect.querySelectorAll("option");
+// Auto-fill doctors list when department changes
+const dept = document.getElementById("department");
+const doc = document.getElementById("doctor");
 
-    options.forEach(option => {
-        if (option.value === "") {
-            option.style.display = "block"; // Always show "Select Doctor"
-        } else if (deptId === "" || option.getAttribute("data-dept") === deptId) {
-            option.style.display = "block";
-        } else {
-            option.style.display = "none";
-        }
+if (dept) {
+    dept.addEventListener("change", () => {
+        doc.innerHTML = "";
+
+        const d = dept.value;
+
+        let doctors = [];
+
+        if (d === "Medicine") doctors = ["Dr. R. Sharma"];
+        if (d === "Pathology") doctors = ["Dr. A. Verma"];
+        if (d === "Dermatology") doctors = ["Dr. P. Singh"];
+        if (d === "Dentist") doctors = ["Dr. K. Rao"];
+
+        doctors.forEach(x => {
+            const opt = document.createElement("option");
+            opt.textContent = x;
+            doc.appendChild(opt);
+        });
     });
-    // Reset doctor selection
-    doctorSelect.value = "";
 }
-
-// ================= INITIALIZATION =================
-// Make sure the dashboard is visible on page load
-document.addEventListener("DOMContentLoaded", () => {
-    switchSection("dashboard", document.querySelector(".nav-pill.active"));
-});
