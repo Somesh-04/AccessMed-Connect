@@ -1,92 +1,118 @@
-document.addEventListener("DOMContentLoaded", () => {
+const API = "http://localhost:5000/api";
 
-    const API = "http://localhost:5000/api";
+/* ===============================
+   ELEMENTS
+=============================== */
+const dashboardTab = document.getElementById("tab-dashboard");
+const medicinesTab = document.getElementById("tab-medicines");
 
-    /* ===============================
-       FETCH DASHBOARD METRICS
-    =============================== */
-    fetch(`${API}/metrics`)
+const dashboardView = document.getElementById("dashboard-view");
+const medicinesView = document.getElementById("medicines-view");
+
+/* ===============================
+   TAB SWITCHING (HARD TOGGLE)
+=============================== */
+dashboardTab.addEventListener("click", e => {
+    e.preventDefault();
+
+    dashboardTab.classList.add("active");
+    medicinesTab.classList.remove("active");
+
+    dashboardView.style.display = "block";
+    medicinesView.style.display = "none";
+});
+
+medicinesTab.addEventListener("click", e => {
+    e.preventDefault();
+
+    medicinesTab.classList.add("active");
+    dashboardTab.classList.remove("active");
+
+    dashboardView.style.display = "none";
+    medicinesView.style.display = "block";
+
+    loadMedicines();
+});
+
+/* ===============================
+   DASHBOARD METRICS
+=============================== */
+fetch(`${API}/dashboard`)
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("metric-medicines").innerText = data.total_medicines;
+        document.getElementById("metric-transactions").innerText = data.transactions_today;
+        document.getElementById("metric-low").innerText = data.low_stock;
+    });
+
+/* ===============================
+   LOAD MEDICINES
+=============================== */
+function loadMedicines() {
+    fetch(`${API}/medicines`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById("metric-medicines").innerText = data.medicines;
-            document.getElementById("metric-transactions").innerText = data.transactions;
-            document.getElementById("metric-low").innerText = data.low_stock;
-        })
-        .catch(err => {
-            console.error("Error fetching metrics:", err);
-        });
+            const tbody = document.getElementById("medicine-table");
+            tbody.innerHTML = "";
 
+            data.forEach(med => {
+                const low = med.quantity <= 10;
+                const tr = document.createElement("tr");
 
-    /* ===============================
-       FETCH INVENTORY
-    =============================== */
-    fetch(`${API}/inventory`)
-        .then(res => res.json())
-        .then(data => {
-            const table = document.getElementById("inventory-table");
-            table.innerHTML = "";
-
-            data.forEach(item => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td><b>${item.name}</b></td>
-                    <td>${item.quantity} units</td>
+                tr.innerHTML = `
+                    <td><b>${med.name}</b></td>
+                    <td>${med.category}</td>
+                    <td class="${low ? "low" : "ok"}">${med.quantity}</td>
+                    <td>
+                        <input type="number" min="1" max="${med.quantity}">
+                        <button class="order-btn ${low ? "warn" : ""}"
+                                onclick="orderMedicine(${med.id})">
+                            Order
+                        </button>
+                    </td>
                 `;
 
-                if (item.quantity <= 10) {
-                    row.style.color = "#f87171";
-                    row.style.fontWeight = "600";
-                } else if (item.quantity <= 20) {
-                    row.style.color = "#fde68a";
-                }
-
-                table.appendChild(row);
+                tbody.appendChild(tr);
             });
-        })
-        .catch(err => {
-            console.error("Error fetching inventory:", err);
         });
+}
 
-
-    /* ===============================
-       FETCH LOW STOCK LIST
-    =============================== */
-    fetch(`${API}/low-stock`)
-        .then(res => res.json())
-        .then(data => {
-            const list = document.getElementById("low-stock-list");
-            list.innerHTML = "";
-
-            data.forEach(item => {
-                const li = document.createElement("li");
-                li.innerText = `${item.name} – ${item.quantity} units`;
-
-                if (item.quantity <= 10) {
-                    li.style.color = "#f87171";
-                    li.style.fontWeight = "600";
-                }
-
-                list.appendChild(li);
-            });
-        })
-        .catch(err => {
-            console.error("Error fetching low stock:", err);
-        });
-
-
-    /* ===============================
-       SUPPORT NAVIGATION - REMOVED POPUP
-       Now links directly to support page
-    =============================== */
-    // Footer support link now navigates to index.html#support
-    // No need for popup - it will redirect to the support page
-    
-    const supportLinks = document.querySelectorAll(".footer-support, .nav-pill[href*='support']");
-    supportLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            // Let the link work normally - it will navigate to support page
-            // The hash (#support) will be handled by the index.html's script.js
-            console.log("Navigating to support page...");
-        });
+/* ===============================
+   SEARCH
+=============================== */
+document.getElementById("medicine-search").addEventListener("input", function () {
+    const value = this.value.toLowerCase();
+    document.querySelectorAll("#medicine-table tr").forEach(row => {
+        row.style.display = row.innerText.toLowerCase().includes(value)
+            ? ""
+            : "none";
     });
 });
+
+/* ===============================
+   ORDER MEDICINE
+=============================== */
+function orderMedicine(medicineId) {
+    const patientId = document.getElementById("patient-id").value;
+    const patientName = document.getElementById("patient-name").value;
+
+    if (!patientId || !patientName) {
+        alert("Please enter Patient ID and Name");
+        return;
+    }
+
+    fetch(`${API}/order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            patient_id: patientId,
+            patient_name: patientName,
+            medicine_id: medicineId
+        })
+    })
+    .then(res => res.json())
+    .then(() => {
+        alert("Medicine ordered successfully");
+        loadMedicines();
+    });
+}
