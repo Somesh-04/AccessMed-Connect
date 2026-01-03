@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("metric-medicines").innerText = data.medicines;
             document.getElementById("metric-transactions").innerText = data.transactions;
             document.getElementById("metric-low").innerText = data.low_stock;
+        })
+        .catch(err => {
+            console.error("Error fetching metrics:", err);
         });
 
 
@@ -39,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 table.appendChild(row);
             });
+        })
+        .catch(err => {
+            console.error("Error fetching inventory:", err);
         });
 
 
@@ -62,18 +68,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 list.appendChild(li);
             });
+        })
+        .catch(err => {
+            console.error("Error fetching low stock:", err);
         });
 
 
     /* ===============================
-       SUPPORT POPUP (UNCHANGED)
+       SUPPORT NAVIGATION - REMOVED POPUP
+       Now links directly to support page
     =============================== */
-    document.querySelector(".footer-support").addEventListener("click", e => {
-        e.preventDefault();
-        alert(
-            "🩺 DISPENSARY SUPPORT\n\n" +
-            "📧 dispensary.support@ccl.in\n" +
-            "📞 +91-XXXX-XXXXXX"
-        );
+    // Footer support link now navigates to index.html#support
+    // No need for popup - it will redirect to the support page
+    
+    const supportLinks = document.querySelectorAll(".footer-support, .nav-pill[href*='support']");
+    supportLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            // Let the link work normally - it will navigate to support page
+            // The hash (#support) will be handled by the index.html's script.js
+            console.log("Navigating to support page...");
+        });
     });
 });

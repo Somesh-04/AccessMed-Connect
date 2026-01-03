@@ -308,8 +308,33 @@ document.querySelectorAll(".symptom-list li").forEach(item => {
 });
 
 /* ------------------------------
-   7. Initialize
+   7. Initialize & Handle Hash Navigation
 ------------------------------ */
+
+// CRITICAL: Check hash IMMEDIATELY before DOM loads
+(function() {
+    const hash = window.location.hash.substring(1);
+    const validPages = ['home', 'login', 'medai', 'emergency', 'support'];
+    
+    // Store the target page for later
+    if (hash && validPages.includes(hash)) {
+        window.initialPage = hash;
+    } else {
+        window.initialPage = 'home';
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
-    navigateToPage('home');
+    // Navigate to the stored initial page
+    navigateToPage(window.initialPage || 'home');
+});
+
+// Also handle hash changes when user uses browser back/forward
+window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.substring(1);
+    const validPages = ['home', 'login', 'medai', 'emergency', 'support'];
+    
+    if (hash && validPages.includes(hash)) {
+        navigateToPage(hash);
+    }
 });
