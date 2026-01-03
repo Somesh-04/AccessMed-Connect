@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AccessMed Connect | Dispensary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dispensary.css">
+</head>
+
+<body>
+
+<header class="hero-header">
+    <img src="/Logo/CCL.png" class="hero-logo">
+    <h1 class="hero-title">CHEMIST PORTAL</h1>
+    <p class="hero-tagline">Improving health with best Medicine</p>
+    <p class="hero-sub">Central Coalfields Limited</p>
+</header>
+
+<nav>
+    <a href="#" class="nav-pill active" id="tab-dashboard">Dashboard</a>
+    <a href="#" class="nav-pill" id="tab-medicines">Medicines</a>
+    <a href="/Landing-Page-Satyam/support.html" class="nav-pill">Support</a>
+</nav>
+
+<main class="main-content">
+
+    <!-- ================= DASHBOARD ================= -->
+    <section id="dashboard-view">
+
+        <div class="feature-row">
+            <div class="feature-card">
+                <h4 class="card-title">Medicines in Stock</h4>
+                <div class="card-metric" id="metric-medicines">0</div>
+                <p class="card-sub">Total items</p>
+            </div>
+
+            <div class="feature-card">
+                <h4 class="card-title">Transactions Today</h4>
+                <div class="card-metric" id="metric-transactions">0</div>
+                <p class="card-sub">Patients served</p>
+            </div>
+
+            <div class="feature-card">
+                <h4 class="card-title">Low Stock</h4>
+                <div class="card-metric" id="metric-low">0</div>
+                <p class="card-sub">Attention required</p>
+            </div>
+        </div>
+<!-- INVENTORY -->
+<div class="ref-card-container">
+
+    <div class="ref-card">
+        <h3>💊 Medicine Inventory</h3>
+        <table class="vitals-table" id="inventory-table"></table>
+        <p class="note">Stock updated in real-time.</p>
+    </div>
+
+    <div class="ref-card">
+        <h3>⚠️ Low Stock / Attention</h3>
+        <ul class="symptom-list" id="low-stock-list"></ul>
+        <p class="note">Immediate procurement recommended.</p>
+    </div>
+
+</div>
+
+    </section>
+
+    <!-- ================= MEDICINES ================= -->
+    <!-- 🔒 HARD HIDDEN BY DEFAULT -->
+    <section id="medicines-view" style="display:none;">
+
+        <!-- PATIENT PROFILE -->
+        <div class="ref-card">
+            <h3>👤 Patient Profile</h3>
+
+            <div class="patient-form">
+                <input type="text" id="patient-id" placeholder="Patient ID">
+                <input type="text" id="patient-name" placeholder="Patient Name">
+            </div>
+
+            <p class="note">Orders are logged against this patient</p>
+        </div>
+
+        <!-- MEDICINE INVENTORY -->
+        <div class="ref-card">
+            <h3>💊 Medicine Availability</h3>
+
+            <input
+                type="text"
+                id="medicine-search"
+                class="medicine-search"
+                placeholder="Search medicines..."
+            >
+
+            <table class="vitals-table">
+                <thead>
+                    <tr>
+                        <th>Medicine</th>
+                        <th>Category</th>
+                        <th>Available</th>
+                        <th>Order</th>
+                    </tr>
+                </thead>
+                <tbody id="medicine-table">
+                    <!-- Filled by JS -->
+                </tbody>
+            </table>
+
+            <p class="note">Live data from dispensary database</p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer-min">
+    <div class="footer-content">
+        <span>© AccessMed Connect 2025</span>
+        <a href="/Landing-Page-Satyam/support.html" class="footer-support">Support</a>
+    </div>
+</footer>
+
+<script src="dispensary.js"></script>
+</body>
+</html>
