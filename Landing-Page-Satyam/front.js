@@ -141,3 +141,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const page = hash.replace("#", "").replace("-page", "");
+
+    // use your existing page system
+    const navBtn = document.querySelector(`#main-nav [data-page='${page}']`);
+    if (navBtn) navBtn.click();  // triggers showPage()
+    
+    // special case: login page -> ensure login form open
+    if (page === "login") {
+        const loginBtn = document.getElementById("loginBtn");
+        if (loginBtn) loginBtn.click();
+    }
+});
+
