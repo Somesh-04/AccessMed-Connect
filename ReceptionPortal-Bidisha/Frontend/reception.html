@@ -97,7 +97,7 @@
             <section id="book" class="panel">
                 <h2>Book New Appointment</h2>
 
-                <form class="booking-form" onsubmit="bookAppointment(event)">
+                <form class="booking-form">
 
                     <!-- Patient ID -->
                     <label>Patient ID
@@ -123,7 +123,7 @@
 
                     <!-- Doctor -->
                     <label>Doctor
-                        <select id="doctorSelect" required disabled>
+                        <select id="doctorSelect" disabled>
                             <option value="">Select Department First</option>
                         </select>
                     </label>
@@ -137,8 +137,7 @@
                     <label>Reason for Visit
                         <input type="text" id="reason" required placeholder="Reason for Visit">
                     </label>
-
-                    <button type="submit" class="primary-btn">Book Appointment</button>
+                    <button type="button" class="primary-btn" onclick="bookAppointment()">Book Appointment</button>
                 </form>
             </section>
 
@@ -158,7 +157,9 @@
 <!-- ===================== -->
 
 <script>
-/* NAVIGATION */
+/* ===============================
+   NAVIGATION (DO NOT TOUCH LOGIC)
+================================ */
 function showSection(id, btn) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
     document.getElementById(id).classList.add('visible');
@@ -167,61 +168,126 @@ function showSection(id, btn) {
     btn.classList.add('active');
 }
 
-/* LOAD DEPARTMENTS FROM DB */
-async function loadDepartments() {
-    const res = await fetch("/api/departments");
-    const data = await res.json();
+/* ===============================
+   MAIN LOGIC (WAIT FOR DOM)
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
 
-    const dept = document.getElementById("departmentSelect");
-
-    dept.innerHTML = `
-        <option value="">Select Department</option>
-        ${data.map(d => `<option value="${d.id}">${d.name}</option>`).join("")}
-    `;
-}
-
-/* LOAD DOCTORS BY DEPARTMENT AVAILABLE TODAY */
-async function loadDoctorsForDepartment() {
-
-    const deptId = document.getElementById("departmentSelect").value;
+    // ===== ELEMENT REFERENCES =====
+    const departmentSelect = document.getElementById("departmentSelect");
     const doctorSelect = document.getElementById("doctorSelect");
+    const dateInput = document.getElementById("appointmentDate");
 
-    if (!deptId) {
-        doctorSelect.innerHTML = `<option>Select Department First</option>`;
-        doctorSelect.disabled = true;
+    // SAFETY CHECK (prevents freeze)
+    if (!departmentSelect || !doctorSelect || !dateInput) {
+        console.error("Required form elements not found");
         return;
     }
 
-    const res = await fetch(`/api/doctors-by-department/${deptId}`);
-    const data = await res.json();
+    /* ===============================
+       LOAD DEPARTMENTS FROM BACKEND
+    ================================ */
+    fetch("http://127.0.0.1:5000/api/departments")
+        .then(res => res.json())
+        .then(depts => {
+            departmentSelect.innerHTML =
+                `<option value="">Select Department</option>` +
+                depts.map(d =>
+                    `<option value="${d.id}">${d.name}</option>`
+                ).join("");
+        })
+        .catch(err => {
+            console.error("Department load failed", err);
+            departmentSelect.innerHTML = `<option>Error loading departments</option>`;
+        });
 
-    if (!data.length) {
-        doctorSelect.innerHTML = `<option>No doctors available today</option>`;
+    /* ===============================
+       LOAD DOCTORS (DB-DRIVEN)
+    ================================ */
+    async function loadDoctors() {
+        const deptId = departmentSelect.value;
+        const date = dateInput.value;
+
+        doctorSelect.innerHTML = "";
         doctorSelect.disabled = true;
-        return;
+
+        if (!deptId || !date) {
+            doctorSelect.innerHTML = `<option>Select department and date</option>`;
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                `http://127.0.0.1:5000/api/available-doctors?department_id=${deptId}&date=${date}`
+            );
+
+            const doctors = await res.json();
+
+            if (!doctors.length) {
+                doctorSelect.innerHTML = `<option>No doctors available</option>`;
+                return;
+            }
+
+            doctorSelect.disabled = false;
+            doctorSelect.innerHTML =
+                `<option value="">Select Doctor</option>` +
+                doctors.map(d =>
+                    `<option value="${d.id}">${d.name}</option>`
+                ).join("");
+
+        } catch (err) {
+            console.error("Doctor load error", err);
+            doctorSelect.innerHTML = `<option>Error loading doctors</option>`;
+        }
     }
 
-    doctorSelect.disabled = false;
+    departmentSelect.addEventListener("change", loadDoctors);
+    dateInput.addEventListener("change", loadDoctors);
 
-    doctorSelect.innerHTML = `
-        <option value="">Select Doctor</option>
-        ${data.map(d => `<option value="${d.id}">${d.name}</option>`).join("")}
-    `;
-}
+    /* ===============================
+       BOOK APPOINTMENT
+    ================================ */
+    window.bookAppointment = async function () {
 
-/* BOOK APPOINTMENT (frontend only; backend insert needed) */
-async function bookAppointment(e){
-    e.preventDefault();
+        const payload = {
+            patient_id: document.getElementById("patientId").value,
+            patient_name: document.getElementById("patientName").value,
+            doctor_id: doctorSelect.value,
+            date: dateInput.value,
+            reason: document.getElementById("reason").value
+        };
 
-    // TODO: connect this to your /api/book endpoint when ready
+        if (!payload.patient_id || !payload.doctor_id || !payload.date) {
+            alert("Please fill all required fields");
+            return;
+        }
 
-    alert("Appointment booking will be submitted to backend here.");
-}
+        try {
+            const res = await fetch(
+                "http://127.0.0.1:5000/api/book-appointment",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                }
+            );
 
-/* INITIAL LOAD CALLS */
-loadDepartments();
+            if (res.ok) {
+                alert("Appointment booked successfully");
+            } else {
+                const err = await res.text();
+                alert("Booking failed: " + err);
+            }
 
+        } catch (err) {
+            alert("Network error: " + err.message);
+            console.error(err);
+        }
+    };
+
+});
 </script>
+
 
 </body>
 </html>
