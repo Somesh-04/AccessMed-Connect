@@ -10,108 +10,218 @@
 <body>
 
 <header class="hero-header">
-    <img src="CCL.png" class="hero-logo">
+    <img src="/Logo/CCL.png" class="hero-logo" alt="CCL Logo">
     <h1 class="hero-title">CHEMIST PORTAL</h1>
     <p class="hero-tagline">Improving health with best Medicine</p>
     <p class="hero-sub">Central Coalfields Limited</p>
 </header>
 
 <nav>
-    <a href="#" class="nav-pill active" id="tab-dashboard">Dashboard</a>
-    <a href="#" class="nav-pill" id="tab-medicines">Medicines</a>
-    <a href="/Landing-Page-Satyam/support.html" class="nav-pill">Support</a>
+    <a class="nav-pill active" id="tab-dashboard">Dashboard</a>
+    <a class="nav-pill" id="tab-medicines">Medicines</a>
+    <a href="/Landing-Page-Satyam/index.html#support" class="nav-pill">Support</a>
 </nav>
 
 <main class="main-content">
-
-    <!-- ================= DASHBOARD ================= -->
+    <!-- DASHBOARD -->
     <section id="dashboard-view">
-
         <div class="feature-row">
             <div class="feature-card">
                 <h4 class="card-title">Medicines in Stock</h4>
                 <div class="card-metric" id="metric-medicines">0</div>
                 <p class="card-sub">Total items</p>
             </div>
-
             <div class="feature-card">
                 <h4 class="card-title">Transactions Today</h4>
                 <div class="card-metric" id="metric-transactions">0</div>
                 <p class="card-sub">Patients served</p>
             </div>
-
             <div class="feature-card">
                 <h4 class="card-title">Low Stock</h4>
                 <div class="card-metric" id="metric-low">0</div>
                 <p class="card-sub">Attention required</p>
             </div>
         </div>
-<!-- INVENTORY -->
-<div class="ref-card-container">
 
-    <div class="ref-card">
-        <h3>💊 Medicine Inventory</h3>
-        <table class="vitals-table" id="inventory-table"></table>
-        <p class="note">Stock updated in real-time.</p>
-    </div>
-
-    <div class="ref-card">
-        <h3>⚠️ Low Stock / Attention</h3>
-        <ul class="symptom-list" id="low-stock-list"></ul>
-        <p class="note">Immediate procurement recommended.</p>
-    </div>
-
-</div>
-
+        <div class="ref-card-container">
+            <div class="ref-card">
+                <h3>💊 Medicine Inventory</h3>
+                <table class="vitals-table">
+                    <thead>
+                        <tr>
+                            <th>Medicine</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-table"></tbody>
+                </table>
+                <p class="note">Stock updated in real-time.</p>
+            </div>
+            <div class="ref-card">
+                <h3>⚠️ Low Stock / Attention</h3>
+                <ul class="symptom-list" id="low-stock-list"></ul>
+                <p class="note">Immediate procurement recommended.</p>
+            </div>
+        </div>
     </section>
 
-    <!-- ================= MEDICINES ================= -->
-    <!-- 🔒 HARD HIDDEN BY DEFAULT -->
+    <!-- MEDICINES -->
     <section id="medicines-view" style="display:none;">
-
-        <!-- PATIENT PROFILE -->
         <div class="ref-card">
-            <h3>👤 Patient Profile</h3>
-
-            <div class="patient-form">
-                <input type="text" id="patient-id" placeholder="Patient ID">
-                <input type="text" id="patient-name" placeholder="Patient Name">
+            <div class="card-header-with-action">
+                <h3>💊 Medicine Availability</h3>
+                <button class="add-medicine-btn" id="add-medicine-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    Add New Medicine
+                </button>
             </div>
-
-            <p class="note">Orders are logged against this patient</p>
-        </div>
-
-        <!-- MEDICINE INVENTORY -->
-        <div class="ref-card">
-            <h3>💊 Medicine Availability</h3>
-
-            <input
-                type="text"
-                id="medicine-search"
-                class="medicine-search"
-                placeholder="Search medicines..."
-            >
-
+            <input type="text" id="medicine-search" class="medicine-search" placeholder="Search medicines...">
             <table class="vitals-table">
                 <thead>
                     <tr>
                         <th>Medicine</th>
                         <th>Category</th>
-                        <th>Available</th>
-                        <th>Order</th>
+                        <th>Stock</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="medicine-table">
-                    <!-- Filled by JS -->
-                </tbody>
+                <tbody id="medicine-table"></tbody>
             </table>
-
             <p class="note">Live data from dispensary database</p>
         </div>
-
     </section>
-
 </main>
+
+<!-- ADD MEDICINE MODAL -->
+<div class="modal-overlay" id="add-medicine-overlay"></div>
+<div class="add-medicine-modal" id="add-medicine-modal">
+    <div class="modal-header">
+        <h3>➕ Add New Medicine</h3>
+        <button class="close-modal" id="close-add-medicine">✕</button>
+    </div>
+    
+    <form class="modal-body" id="add-medicine-form">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="medicine-name">Medicine Name *</label>
+                <input type="text" id="medicine-name" required placeholder="e.g., Paracetamol">
+            </div>
+            
+            <div class="form-group">
+                <label for="generic-name">Generic Name *</label>
+                <input type="text" id="generic-name" required placeholder="e.g., Acetaminophen">
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category *</label>
+                <select id="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Analgesic">Analgesic</option>
+                    <option value="Antibiotic">Antibiotic</option>
+                    <option value="Antiseptic">Antiseptic</option>
+                    <option value="Antiviral">Antiviral</option>
+                    <option value="Cardiovascular">Cardiovascular</option>
+                    <option value="Dermatological">Dermatological</option>
+                    <option value="Gastrointestinal">Gastrointestinal</option>
+                    <option value="Respiratory">Respiratory</option>
+                    <option value="Vitamin">Vitamin</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer *</label>
+                <input type="text" id="manufacturer" required placeholder="e.g., Cipla Ltd">
+            </div>
+            
+            <div class="form-group">
+                <label for="batch-no">Batch Number *</label>
+                <input type="text" id="batch-no" required placeholder="e.g., BT2024001">
+            </div>
+            
+            <div class="form-group">
+                <label for="expiry-date">Expiry Date *</label>
+                <input type="date" id="expiry-date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantity">Quantity in Stock *</label>
+                <input type="number" id="quantity" required min="0" placeholder="e.g., 500">
+            </div>
+            
+            <div class="form-group">
+                <label for="unit-price">Unit Price (₹) *</label>
+                <input type="number" id="unit-price" required min="0" step="0.01" placeholder="e.g., 5.50">
+            </div>
+            
+            <div class="form-group">
+                <label for="reorder-level">Reorder Level *</label>
+                <input type="number" id="reorder-level" required min="0" placeholder="e.g., 50">
+            </div>
+            
+            <div class="form-group">
+                <label for="storage-location">Storage Location *</label>
+                <input type="text" id="storage-location" required placeholder="e.g., Shelf A-3">
+            </div>
+            
+            <div class="form-group full-width">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="prescription-required">
+                    <span>Prescription Required</span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="cancel-btn" id="cancel-add-medicine">Cancel</button>
+            <button type="submit" class="submit-btn">Add Medicine</button>
+        </div>
+    </form>
+</div>
+
+<!-- FLOATING CART BUTTON (Only visible in medicines section) -->
+<div class="floating-cart" id="floating-cart" style="display: none;">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+    </svg>
+    <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+</div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cart-popup">
+    <div class="cart-header">
+        <h3>🛒 Your Cart</h3>
+        <button class="close-cart" id="close-cart">✕</button>
+    </div>
+    
+    <div class="cart-body" id="cart-body">
+        <div class="cart-empty">
+            Your cart is empty. Add medicines to get started.
+        </div>
+    </div>
+    
+    <div class="cart-footer" id="cart-footer" style="display: none;">
+        <div class="patient-info-mini">
+          <input type="text" id="cart-patient-id" placeholder="Employee ID">
+          <input type="text" id="cart-patient-name" placeholder="Patient Name">
+       </div>
+        
+        <div class="cart-total">
+            <span>Total Items:</span>
+            <span id="cart-total-items">0</span>
+        </div>
+        
+        <button class="checkout-btn" id="checkout-btn" disabled>
+            Place Order
+        </button>
+    </div>
+</div>
 
 <footer class="footer-min">
     <div class="footer-content">

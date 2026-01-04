@@ -1,6 +1,7 @@
 import uuid
 from extensions import db
 
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -10,7 +11,6 @@ class User(db.Model):
     password_hash = db.Column(db.Text, nullable=False)
     role = db.Column(db.Text, nullable=False)
 
-    # column name in DB has underscore & quotes
-    full_name = db.Column('Full_name', db.Text, nullable=False)
+    full_name = db.Column("Full_name", db.Text, nullable=False)
 
     emp_id = db.Column(db.BigInteger, unique=True, nullable=False)
