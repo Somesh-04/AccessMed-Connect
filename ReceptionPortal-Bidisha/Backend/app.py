@@ -20,6 +20,34 @@ def get_conn():
         connect_timeout=5
     )
 
+# ============================
+# DASHBOARD STATS
+# ============================
+@app.route("/api/dashboard")
+def dashboard():
+    today = datetime.today().date()
+
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+
+            # Total doctors
+            cur.execute("SELECT COUNT(*) FROM doctors")
+            total_doctors = cur.fetchone()[0]
+
+            # Appointments today
+            cur.execute(
+                "SELECT COUNT(*) FROM appointments WHERE date = %s",
+                (today,)
+            )
+            appointments_today = cur.fetchone()[0]
+
+    return {
+        "totalDoctors": total_doctors,
+        "appointmentsToday": appointments_today,
+        "patientsWaiting": appointments_today,
+        "currentlyServing": 0
+    }
+
 
 # ============================
 # HEALTH CHECK

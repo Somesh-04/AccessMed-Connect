@@ -157,6 +157,26 @@
 <!-- ===================== -->
 
 <script>
+
+/* ===============================
+   LOAD DASHBOARD DATA
+================================ */
+async function loadDashboard() {
+    try {
+        const res = await fetch("http://127.0.0.1:5000/api/dashboard");
+        const data = await res.json();
+
+        document.getElementById("totalDoctors").innerText = data.totalDoctors;
+        document.getElementById("appointmentsToday").innerText = data.appointmentsToday;
+        document.getElementById("patientsWaiting").innerText = data.patientsWaiting;
+        document.getElementById("currentlyServing").innerText = data.currentlyServing;
+
+    } catch (err) {
+        console.error("Dashboard load failed", err);
+    }
+}
+loadDashboard();
+
 /* ===============================
    NAVIGATION (DO NOT TOUCH LOGIC)
 ================================ */
