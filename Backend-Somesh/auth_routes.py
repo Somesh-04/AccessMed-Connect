@@ -3,9 +3,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from extensions import db
 from models import User
 
+# --------------------------------------------
+# CREATE BLUEPRINT FIRST  ✅ IMPORTANT
+# --------------------------------------------
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 
+# --------------------------------------------
+# SIGNUP
+# --------------------------------------------
 @auth.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
@@ -41,22 +47,33 @@ def signup():
     return jsonify({"message": "Signup successful"}), 201
 
 
+# --------------------------------------------
+# LOGIN – email OR emp_id
+# --------------------------------------------
 @auth.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
+
     identifier = data.get("identifier")
     password = data.get("password")
 
-    # try email
+    if not identifier or not password:
+        return jsonify({"error": "Missing credentials"}), 400
+
+    # Try email first
     user = User.query.filter_by(email=identifier).first()
 
-    # try employee id if email didn’t match
+    # If not found, try employee ID
     if not user:
         user = User.query.filter_by(emp_id=identifier).first()
 
-    if not user or not check_password_hash(user.password_hash, password):
-        return jsonify({"error": "Invalid credentials"}), 400
+    if not user:
+        return jsonify({"error": "User not found"}), 404
 
+    if not check_password_hash(user.password_hash, password):
+        return jsonify({"error": "Invalid password"}), 400
+
+    # redirect based on role
     redirects = {
         "Doctor": "/Doctor-portal-Aastha/frontend/doctor-portal.html",
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
@@ -64,4 +81,13 @@ def login():
         "Chemist": "/Chemist-portal-Aastha/frontend/dispensary.html",
     }
 
-    return jsonify({"redirect_to": redirects.get(user.role, "/")})
+    return jsonify({
+        "message": "Login successful",
+        "redirect_to": redirects.get(user.role, "/"),
+        "user": {
+            "full_name": user.full_name,
+            "email": user.email,
+            "emp_id": user.emp_id,
+            "role": user.role
+        }
+    }), 200
