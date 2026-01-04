@@ -76,6 +76,37 @@ def doctors_today():
         for r in rows
     ])
 
+# ============================
+# TODAY'S APPOINTMENTS
+# ============================
+@app.route("/api/appointments-today")
+def appointments_today():
+    today = datetime.today().date()
+
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    a.patient_name,
+                    d.name
+                FROM appointments a
+                JOIN doctors d
+                  ON d.id = a.doctor_id
+                WHERE a.date = %s
+                ORDER BY a.created_at
+            """, (today,))
+
+            rows = cur.fetchall()
+
+    return jsonify([
+        {
+            "patient_name": r[0],
+            "doctor_name": r[1],
+            "status": "Waiting"
+        }
+        for r in rows
+    ])
+
 
 # ============================
 # HEALTH CHECK
