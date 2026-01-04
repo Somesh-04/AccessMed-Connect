@@ -18,7 +18,7 @@ function initPatientPortal() {
 
     if (!raw) {
         alert("Please login first");
-        window.location.href = "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+        window.location.href = "/Landing-Page-Satyam/index.html#login";
         return;
     }
 
@@ -29,7 +29,7 @@ function initPatientPortal() {
     } catch (err) {
         console.error("Corrupted user in storage:", err);
         localStorage.removeItem("amc_user");
-        window.location.href = "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+        window.location.href = "/Landing-Page-Satyam/index.html#login";
         return;
     }
 
