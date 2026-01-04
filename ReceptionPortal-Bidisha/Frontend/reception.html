@@ -178,6 +178,39 @@ async function loadDashboard() {
 loadDashboard();
 
 /* ===============================
+   LOAD ACTIVE DOCTORS TODAY
+================================ */
+async function loadDoctorsToday() {
+    try {
+        const res = await fetch("http://127.0.0.1:5000/api/doctors-today");
+        const data = await res.json();
+
+        const tbody = document.querySelector("#activeDoctorsTable tbody");
+        tbody.innerHTML = "";
+
+        if (!data.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="2">No doctors available today</td>
+                </tr>`;
+            return;
+        }
+
+        data.forEach(d => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${d.name}</td>
+                <td>${d.department}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+    } catch (err) {
+        console.error("Failed to load doctors", err);
+    }
+}
+
+/* ===============================
    NAVIGATION (DO NOT TOUCH LOGIC)
 ================================ */
 function showSection(id, btn) {
@@ -186,6 +219,9 @@ function showSection(id, btn) {
 
     document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    if (id === "doctors") {
+        loadDoctorsToday();
+    }
 }
 
 /* ===============================

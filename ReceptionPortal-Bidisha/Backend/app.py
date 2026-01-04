@@ -48,6 +48,34 @@ def dashboard():
         "currentlyServing": 0
     }
 
+# ============================
+# ACTIVE DOCTORS TODAY
+# ============================
+@app.route("/api/doctors-today")
+def doctors_today():
+    today_weekday = datetime.today().isoweekday()  # 1–7
+
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT d.name, dept.name
+                FROM doctors d
+                JOIN departments dept
+                  ON dept.id = d.department_id
+                JOIN doctor_availability da
+                  ON da.doctor_id = d.id
+                WHERE da.day_of_week = %s
+                  AND da.is_available = true
+                ORDER BY dept.name, d.name
+            """, (today_weekday,))
+
+            rows = cur.fetchall()
+
+    return jsonify([
+        {"name": r[0], "department": r[1]}
+        for r in rows
+    ])
+
 
 # ============================
 # HEALTH CHECK
