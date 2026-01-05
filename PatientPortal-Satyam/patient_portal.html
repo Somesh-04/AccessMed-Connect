@@ -7,17 +7,17 @@
 </head>
 <body>
 <!-- HERO HEADER -->
-<header class="hero-header">
-    <div class="hero-content">
-        <img src="/Logo/CCL.png" alt="Central Coalfields Limited" class="hero-logo">
-        <h1 class="hero-title">ACCESSMED CONNECT</h1>
-        <p class="hero-tagline">~ Medicine & Medical Records Portal</p>
-        <p class="hero-sub">
-            Central Coalfields Limited <br>
-            <span>(A Subsidiary of Coal India Limited)</span>
-        </p>
-    </div>
-</header>
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="/Logo/CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
 
 <!-- NAVBAR -->
 <header class="portal-header">
@@ -31,7 +31,6 @@
 <nav class="nav-tabs">
     <button class="nav-tab active" data-section="dashboard">Dashboard</button>
     <button class="nav-tab" data-section="appointments">Appointments</button>
-    <button class="nav-tab" data-section="medicines">Medicines</button>
 </nav>
 
 <!-- MAIN -->
@@ -77,20 +76,16 @@
             <div class="col">
                 <div class="card equal-card">
                     <h3>Doctor Availability</h3>
+                    <div class="doctor-availability-filters">
+                        <div class="form-group">
+                            <label style="font-size: 12px; color: #cbd5e1;">Department</label>
+                            <select id="dashboard-department">
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                    </div>
                     <ul class="list-box" id="doctor-list">
-                        <li class="empty">Loading doctor availability...</li>
-                    </ul>
-                </div>
-                <div class="card equal-card">
-                    <h3>Medicine Availability</h3>
-                    <ul class="list-box" id="medicine-list">
-                        <li class="empty">Loading medicine data...</li>
-                    </ul>
-                </div>
-                <div class="card equal-card">
-                    <h3>Recent Reports</h3>
-                    <ul class="list-box" id="report-list">
-                        <li class="empty">Loading reports...</li>
+                        <li class="empty">Select a department to view doctors</li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +97,7 @@
         <!-- PAGE HEADER -->
         <section class="page-header">
             <h2>Book Appointment</h2>
-            <p>Select department, then choose an available doctor</p>
+            <p>Fill in the details below to request an appointment</p>
         </section>
         <!-- PATIENT DETAILS -->
         <section class="card">
@@ -129,15 +124,14 @@
                 <div class="form-group">
                     <label>Department</label>
                     <select id="department" required>
-                        <option value="">Loading departments...</option>
+                        <option value="">Select Department</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Doctor</label>
-                    <button type="button" id="select-doctor-btn" class="select-btn" disabled>
-                        Select Doctor
-                    </button>
-                    <input type="hidden" id="doctor-id">
+                    <select id="doctor-select" required>
+                        <option value="">Select Doctor</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Preferred Date</label>
@@ -145,7 +139,7 @@
                 </div>
                 <div class="form-group full">
                     <label>Reason for Visit</label>
-                    <textarea id="reason" rows="3" required></textarea>
+                    <textarea id="reason" rows="3" required placeholder="Describe your reason for visiting..."></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="submit-btn">
@@ -164,80 +158,12 @@
         </section>
     </div>
 
-    <!-- MEDICINES SECTION -->
-    <div id="medicines-section" class="section-content">
-        <!-- PAGE HEADER -->
-        <section class="page-header">
-            <h2>Request Medicine</h2>
-            <p>Submit your medicine requirement</p>
-        </section>
-        <!-- PATIENT DETAILS -->
-        <section class="card">
-            <h3>Patient Details</h3>
-            <div class="info-grid">
-                <div>
-                    <div class="label">Name</div>
-                    <div class="value" id="med-patient-name">—</div>
-                </div>
-                <div>
-                    <div class="label">Employee ID</div>
-                    <div class="value" id="med-patient-emp-id">—</div>
-                </div>
-                <div>
-                    <div class="label">Email ID</div>
-                    <div class="value" id="med-patient-email">—</div>
-                </div>
-            </div>
-        </section>
-        <!-- MEDICINE REQUEST FORM -->
-        <section class="card">
-            <h3>Medicine Request Form</h3>
-            <form id="medicine-form">
-                <div class="form-group">
-                    <label for="medicine-name">Medicine Name</label>
-                    <input type="text" id="medicine-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="dosage">Dosage</label>
-                    <input type="text" id="dosage">
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="remarks">Remarks</label>
-                    <textarea id="remarks" rows="3"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Request</button>
-                <p id="med-form-status" class="status"></p>
-            </form>
-        </section>
-        <!-- REQUEST HISTORY -->
-        <section class="card">
-            <h3>Previous Requests</h3>
-            <ul id="request-list" class="list-box">
-                <li class="empty">Loading request history...</li>
-            </ul>
-        </section>
-    </div>
 </main>
-
-<!-- DOCTOR SELECTION MODAL -->
-<div id="doctor-modal" class="modal hidden">
-    <div class="modal-card">
-        <h3>Select Available Doctor</h3>
-        <ul id="modal-doctor-list" class="list-box">
-            <li class="empty">Loading doctors...</li>
-        </ul>
-        <button class="close-btn" onclick="closeDoctorModal()">Close</button>
-    </div>
-</div>
 
 <!-- FOOTER -->
 <footer class="portal-footer">
     <div>© 2025 AccessMed Connect</div>
-    <div>Need help? <a href="../Landing-Page-Satyam/index.html#support-page" class="link">Support</a></div>
+    <div>Need help? <a href="/Landing-Page-Satyam/index.html#support-page" style="color: #a5b4fc; text-decoration: none;">Support</a></div>
 </footer>
 
 <script src="patient_portal.js"></script>

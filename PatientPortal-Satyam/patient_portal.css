@@ -17,7 +17,7 @@ body {
    HERO HEADER
 ============================ */
 .hero-header {
-    max-width: 1040px;
+    max-width: 1060px;
     margin: 40px auto 30px;
     padding: 60px 30px;
     background: rgba(15,23,42,0.85);
@@ -52,7 +52,7 @@ body {
 }
 
 /* ============================
-   PORTAL HEADER (NAVBAR)
+   PORTAL HEADER
 ============================ */
 .portal-header {
     max-width: 1055px;
@@ -74,10 +74,16 @@ body {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
 }
 
 /* ============================
-   NAVIGATION TABS
+   NAV TABS
 ============================ */
 .nav-tabs {
     max-width: 1055px;
@@ -102,18 +108,17 @@ body {
     transition: all 0.3s ease;
 }
 
-.nav-tab:hover {
-    background: rgba(255,255,255,0.1);
-}
-
 .nav-tab.active {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border-color: transparent;
-    box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+}
+
+.nav-tab:hover {
+    border-color: rgba(255,255,255,0.3);
 }
 
 /* ============================
-   MAIN CONTAINER
+   MAIN LAYOUT
 ============================ */
 .portal-container {
     max-width: 1100px;
@@ -124,9 +129,6 @@ body {
     gap: 32px;
 }
 
-/* ============================
-   SECTION VISIBILITY
-============================ */
 .section-content {
     display: none;
 }
@@ -138,22 +140,6 @@ body {
 }
 
 /* ============================
-   GRID
-============================ */
-.grid-two-col {
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 28px;
-    align-items: stretch;
-}
-
-.col {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-/* ============================
    CARDS
 ============================ */
 .card {
@@ -162,22 +148,24 @@ body {
     border-radius: 18px;
     padding: 22px;
     box-shadow: 0 14px 40px rgba(0,0,0,0.5);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 22px 60px rgba(0,0,0,0.75);
-}
-
-.equal-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .card h3 {
     margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.grid-two-col {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 28px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 /* ============================
@@ -192,54 +180,21 @@ body {
 .label {
     font-size: 14px;
     color: #cbd5e1;
+    margin-bottom: 6px;
 }
 
 .value {
     font-size: 18px;
-    margin-top: 4px;
+    font-weight: 500;
 }
 
 /* ============================
-   BUTTONS
-============================ */
-.quick-actions {
-    margin-top: auto;
-    display: flex;
-    gap: 12px;
-}
-
-.submit-btn {
-    padding: 12px 26px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 10px 28px rgba(99,102,241,0.55);
-    transition: 0.25s ease;
-}
-
-.submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 36px rgba(99,102,241,0.75);
-}
-
-.submit-btn.ghost {
-    padding: 10px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.25);
-    background: transparent;
-    box-shadow: none;
-}
-
-/* ============================
-   LIST
+   LISTS
 ============================ */
 .list-box {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -247,9 +202,15 @@ body {
 
 .list-box li {
     padding: 14px;
-    background: rgba(255,255,255,0.08);
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s ease;
+}
+
+.list-box li:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.15);
 }
 
 .empty {
@@ -268,19 +229,17 @@ body {
 }
 
 .page-header h2 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 700;
+    margin: 0 0 8px 0;
+    font-size: 28px;
 }
 
 .page-header p {
-    margin-top: 6px;
-    font-size: 14px;
-    color: #a5b4fc;
+    margin: 0;
+    color: #cbd5e1;
 }
 
 /* ============================
-   FORM
+   FORMS
 ============================ */
 .form-grid {
     display: grid;
@@ -291,109 +250,97 @@ body {
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .form-group.full {
     grid-column: span 2;
 }
 
-label {
-    font-size: 13px;
-    color: #cbd5e1;
-}
-
-/* ============================
-   INPUTS
-============================ */
 input,
 textarea,
 select {
-    width: 100%;
-    margin-top: 6px;
+    margin-top: 0;
     padding: 10px 12px;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.25);
     background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
     color: white;
-    font-size: 15px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.5);
 }
 
 input:focus,
 textarea:focus,
 select:focus {
     outline: none;
-    border-color: #6366f1;
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-.select-btn {
-    margin-top: 6px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.25);
+select option {
+    background: #1e293b;
     color: white;
-    font-size: 15px;
-    cursor: pointer;
 }
 
-.select-btn:disabled {
+/* ============================
+   BUTTONS
+============================ */
+.submit-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+
+.submit-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
 }
 
 .form-actions {
     grid-column: span 2;
     display: flex;
+    gap: 12px;
     align-items: center;
-    gap: 16px;
-    margin-top: 8px;
 }
 
 .status {
     font-size: 14px;
+    font-weight: 500;
 }
 
 /* ============================
-   MODAL (DOCTOR POPUP)
+   DOCTOR AVAILABILITY SECTION
 ============================ */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.hidden {
-    display: none;
-}
-
-.modal-card {
-    width: 90%;
-    max-width: 500px;
-    background: rgba(15,23,42,0.95);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-}
-
-.modal-card h3 {
-    margin-top: 0;
-}
-
-.close-btn {
-    margin-top: 16px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 12px;
-    border: none;
-    background: #ef4444;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
+.doctor-availability-filters {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 20px;
 }
 
 /* ============================
@@ -402,35 +349,53 @@ select:focus {
 .portal-footer {
     max-width: 1100px;
     margin: 40px auto;
-    padding: 12px 20px;
+    padding: 20px;
     background: rgba(11,17,32,0.6);
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
-.link {
+.portal-footer a {
     color: #a5b4fc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.portal-footer a:hover {
+    color: #c4b5fd;
+    text-decoration: underline;
 }
 
 /* ============================
    RESPONSIVE
 ============================ */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .grid-two-col {
         grid-template-columns: 1fr;
     }
-    .nav-tabs {
-        flex-direction: column;
-    }
+
     .form-grid {
         grid-template-columns: 1fr;
     }
-    .form-group.full {
-        grid-column: span 1;
-    }
+
+    .form-group.full,
     .form-actions {
         grid-column: span 1;
+    }
+
+    .portal-footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .nav-tabs {
+        flex-direction: column;
     }
 }
