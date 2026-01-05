@@ -31,6 +31,29 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAppointmentForm(user);
 });
 
+// ---------- LOGOUT ----------
+document.addEventListener("DOMContentLoaded", () => {
+
+    const logoutBtn = document.getElementById("btn-logout");
+
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            // remove saved user session
+            localStorage.removeItem("amc_user");
+
+            // optional: clear everything
+            // localStorage.clear();
+
+            alert("Logged out successfully");
+
+            // back to login page
+            window.location.href = "/Landing-Page-Satyam/index.html#login";
+        };
+    }
+
+});
+
+
 
 // ---------- tabs ----------
 function setupTabs() {
