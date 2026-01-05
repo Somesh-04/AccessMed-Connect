@@ -1,29 +1,27 @@
 from flask import Flask
 from flask_cors import CORS
-from extensions import db
+from models import db
 from auth_routes import auth
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+from patient_routes import patient_bp
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+# ---------- DB CONFIG ----------
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:SnNaSsBbAs05@db.yfqltffmmvkkxglxyuep.supabase.co:6543/postgres?sslmode=require"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = os.getenv("SECRET_KEY", "devkey")
 
-# THIS LINE FIXES YOUR ERROR
 db.init_app(app)
-
-# register endpoints
-app.register_blueprint(auth, url_prefix="/api/auth")
 
 
 @app.route("/")
 def home():
-    return "Flask backend running ✔"
+    return "AccessMed API Running"
+
+
+# ---------- BLUEPRINTS ----------
+app.register_blueprint(auth, url_prefix="/api/auth")
+app.register_blueprint(patient_bp)   # already has /api/patient prefix
 
 
 if __name__ == "__main__":

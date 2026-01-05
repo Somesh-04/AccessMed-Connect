@@ -1,93 +1,73 @@
 from flask import Blueprint, request, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
-from extensions import db
-from models import User
+from werkzeug.security import check_password_hash, generate_password_hash
+from models import db, User, Patient
 
-# --------------------------------------------
-# CREATE BLUEPRINT FIRST  ✅ IMPORTANT
-# --------------------------------------------
-auth = Blueprint("auth", __name__, url_prefix="/auth")
+auth = Blueprint("auth", __name__)
 
 
-# --------------------------------------------
-# SIGNUP
-# --------------------------------------------
+# ---------- SIGNUP ----------
 @auth.route("/signup", methods=["POST"])
 def signup():
-    data = request.get_json()
-
-    full_name = data.get("full_name")
-    emp_id = data.get("emp_id")
-    email = data.get("email")
-    password = data.get("password")
-    role = data.get("role")
-
-    if not all([full_name, emp_id, email, password, role]):
-        return jsonify({"error": "Missing fields"}), 400
-
-    if User.query.filter_by(email=email).first():
-        return jsonify({"error": "Email already exists"}), 400
-
-    if User.query.filter_by(emp_id=emp_id).first():
-        return jsonify({"error": "Employee ID already exists"}), 400
-
-    hashed = generate_password_hash(password)
+    data = request.json
 
     user = User(
-        full_name=full_name,
-        emp_id=emp_id,
-        email=email,
-        password_hash=hashed,
-        role=role
+        email=data["email"],
+        emp_id=data["emp_id"],
+        role=data["role"],
+        full_name=data["full_name"],
+        password_hash=generate_password_hash(data["password"])
     )
 
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({"message": "Signup successful"}), 201
+    # also create patient automatically if role = Patient
+    if user.role == "Patient":
+        patient = Patient(
+            emp_id=user.emp_id,
+            name=user.full_name,
+            email=user.email
+        )
+        db.session.add(patient)
+        db.session.commit()
+
+    return jsonify(message="Signup successful"), 201
 
 
-# --------------------------------------------
-# LOGIN – email OR emp_id
-# --------------------------------------------
+# ---------- LOGIN ----------
 @auth.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
+    data = request.json
+    identifier = data["identifier"]
+    password = data["password"]
 
-    identifier = data.get("identifier")
-    password = data.get("password")
-
-    if not identifier or not password:
-        return jsonify({"error": "Missing credentials"}), 400
-
-    # Try email first
+    # email login
     user = User.query.filter_by(email=identifier).first()
 
-    # If not found, try employee ID
-    if not user:
-        user = User.query.filter_by(emp_id=identifier).first()
+    # emp_id login
+    if not user and identifier.isdigit():
+        user = User.query.filter_by(emp_id=int(identifier)).first()
 
     if not user:
-        return jsonify({"error": "User not found"}), 404
+        return jsonify(error="User not found"), 404
 
     if not check_password_hash(user.password_hash, password):
-        return jsonify({"error": "Invalid password"}), 400
+        return jsonify(error="Invalid password"), 401
 
-    # redirect based on role
-    redirects = {
-        "Doctor": "/Doctor-portal-Aastha/frontend/doctor-portal.html",
+    redirect_paths = {
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
-        "Receptionist": "/ReceptionPortal-Satyam/templates/reception.html",
-        "Chemist": "/Chemist-portal-Aastha/frontend/dispensary.html",
+        "Doctor": "/Doctor-Portal-Aastha/frontend/doctor-portal.html",
+        "Chemist": "/Chemist-Portal-Aastha/frontend/dispensary.html",
+        "Receptionist": "/Reception-Portal/reception.html"
     }
 
-    return jsonify({
-        "message": "Login successful",
-        "redirect_to": redirects.get(user.role, "/"),
-        "user": {
+    return jsonify(
+        user={
+            "id": user.id,
             "full_name": user.full_name,
             "email": user.email,
             "emp_id": user.emp_id,
             "role": user.role
-        }
-    }), 200
+        },
+        redirect_to=redirect_paths.get(user.role, "/")
+    )
