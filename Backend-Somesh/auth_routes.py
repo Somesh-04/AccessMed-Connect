@@ -10,28 +10,42 @@ auth = Blueprint("auth", __name__)
 def signup():
     data = request.json
 
+    full_name = data.get("full_name")
+    email = data.get("email")
+    password = data.get("password")
+    role = data.get("role")
+    emp_id = data.get("emp_id")
+
+    if not all([full_name, email, password, role, emp_id]):
+        return jsonify({"error": "All fields required"}), 400
+
+    # role validation
+    if role not in ["Doctor", "Patient", "Receptionist", "Chemist"]:
+        return jsonify({"error": "Invalid role"}), 400
+
+    # convert emp_id to bigint
+    try:
+        emp_id = int(emp_id)
+    except:
+        return jsonify({"error": "Employee ID must be number only"}), 400
+
+    # email or emp already exists
+    if User.query.filter((User.email == email) | (User.emp_id == emp_id)).first():
+        return jsonify({"error": "User already exists"}), 400
+
     user = User(
-        email=data["email"],
-        emp_id=data["emp_id"],
-        role=data["role"],
-        full_name=data["full_name"],
-        password_hash=generate_password_hash(data["password"])
+        full_name=full_name,
+        email=email,
+        emp_id=emp_id,
+        role=role,
+        password_hash=generate_password_hash(password)
     )
 
     db.session.add(user)
     db.session.commit()
 
-    # also create patient automatically if role = Patient
-    if user.role == "Patient":
-        patient = Patient(
-            emp_id=user.emp_id,
-            name=user.full_name,
-            email=user.email
-        )
-        db.session.add(patient)
-        db.session.commit()
+    return jsonify({"message": "Signup successful"}), 201
 
-    return jsonify(message="Signup successful"), 201
 
 
 # ---------- LOGIN ----------
