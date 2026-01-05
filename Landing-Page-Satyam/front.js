@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(`${page}-page`).classList.add("active");
 
         navButtons.forEach(n => n.classList.remove("active-nav"));
-        document.querySelector(`#main-nav [data-page='${page}']`).classList.add("active-nav");
+        document
+            .querySelector(`#main-nav [data-page='${page}']`)
+            .classList.add("active-nav");
 
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -27,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => showPage(btn.dataset.page));
     });
 
-    // default on load
     showPage("home");
 
     /* ============================
@@ -83,15 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
 
-            if (!res.ok) {
-                alert(data.error || "Login failed");
-                return;
-            }
+            if (!res.ok) return alert(data.error || "Login failed");
 
-            // Save user for portals
+            // save user
             localStorage.setItem("amc_user", JSON.stringify(data.user));
 
-            // Redirect based on role
+            // redirect by backend
             window.location.href = data.redirect_to;
 
         } catch (err) {
@@ -106,33 +104,27 @@ document.addEventListener("DOMContentLoaded", () => {
     signupForm.addEventListener("submit", async e => {
         e.preventDefault();
 
-        const inputs = signupForm.querySelectorAll("input");
-        const full_name = inputs[0].value.trim();
-        const emp_id = inputs[1].value.trim();
-        const role = signupForm.querySelector("select").value;
-        const email = inputs[2].value.trim();
+        const full_name = document.getElementById("signupName").value.trim();
+        const emp_id = document.getElementById("signupEmp").value.trim();
+        const role = document.getElementById("signupRole").value;
+        const email = document.getElementById("signupEmail").value.trim();
         const password = document.getElementById("signupPass").value.trim();
 
-        if (!full_name || !emp_id || !email || !password || !role) {
-            alert("Fill all fields");
-            return;
-        }
+        if (!full_name || !emp_id || !role || !email || !password)
+            return alert("Fill all fields");
 
         try {
             const res = await fetch(`${API_BASE}/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ full_name, emp_id, email, password, role })
+                body: JSON.stringify({ full_name, emp_id, role, email, password })
             });
 
             const data = await res.json();
 
-            if (!res.ok) {
-                alert(data.error || "Signup failed");
-                return;
-            }
+            if (!res.ok) return alert(data.error || "Signup failed");
 
-            alert("Signup successful — Login now");
+            alert("Signup successful — please login now");
             openLogin();
 
         } catch (err) {
@@ -142,20 +134,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/* ============================
+   OPEN PAGE VIA HASH
+============================ */
 document.addEventListener("DOMContentLoaded", function () {
     const hash = window.location.hash;
     if (!hash) return;
 
     const page = hash.replace("#", "").replace("-page", "");
 
-    // use your existing page system
     const navBtn = document.querySelector(`#main-nav [data-page='${page}']`);
-    if (navBtn) navBtn.click();  // triggers showPage()
-    
-    // special case: login page -> ensure login form open
+    if (navBtn) navBtn.click();
+
     if (page === "login") {
         const loginBtn = document.getElementById("loginBtn");
         if (loginBtn) loginBtn.click();
     }
 });
-
