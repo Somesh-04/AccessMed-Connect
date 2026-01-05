@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg2  # type: ignore
 
 DATABASE_URL = (
     "postgresql://postgres:SnNaSsBbAs05@db.yfqltffmmvkkxglxyuep.supabase.co:6543/postgres?sslmode=require"
