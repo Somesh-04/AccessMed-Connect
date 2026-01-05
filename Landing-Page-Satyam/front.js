@@ -99,39 +99,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ============================
-       SIGNUP HANDLER
+       SIGNUP HANDLER  (NO HTML ID NEEDED)
     ============================ */
     signupForm.addEventListener("submit", async e => {
         e.preventDefault();
 
-        const full_name = document.getElementById("signupName").value.trim();
-        const emp_id = document.getElementById("signupEmp").value.trim();
-        const role = document.getElementById("signupRole").value;
-        const email = document.getElementById("signupEmail").value.trim();
-        const password = document.getElementById("signupPass").value.trim();
+        // inputs INSIDE signup form (no id dependency)
+        const inputs = signupForm.querySelectorAll("input");
+        const selects = signupForm.querySelectorAll("select");
 
-        if (!full_name || !emp_id || !role || !email || !password)
-            return alert("Fill all fields");
+        const full_name = inputs[0].value.trim();   // Full Name
+        const emp_id_raw = inputs[1].value.trim();  // Emp ID
+        const role = selects[0].value;              // Role dropdown
+        const email = inputs[2].value.trim();       // Email
+        const password = inputs[3].value.trim();    // Password
+
+        if (!full_name || !emp_id_raw || !role || !email || !password) {
+            alert("Fill all fields");
+            return;
+        }
+
+        // convert employee id to bigint
+        const emp_id = Number(emp_id_raw);
+
+        if (isNaN(emp_id)) {
+            alert("Employee ID must contain digits only");
+            return;
+        }
+
+        // backend role validation
+        const allowedRoles = ["Doctor", "Patient", "Receptionist", "Chemist"];
+        if (!allowedRoles.includes(role)) {
+            alert("Invalid role selected");
+            return;
+        }
 
         try {
             const res = await fetch(`${API_BASE}/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ full_name, emp_id, role, email, password })
+                body: JSON.stringify({
+                    full_name,
+                    emp_id,
+                    role,
+                    email,
+                    password
+                })
             });
 
             const data = await res.json();
 
-            if (!res.ok) return alert(data.error || "Signup failed");
+            if (!res.ok) {
+                alert(data.error || "Signup failed");
+                return;
+            }
 
             alert("Signup successful — please login now");
-            openLogin();
+            openLogin(); // switch to login tab
 
         } catch (err) {
             console.error(err);
             alert("Unable to connect to server");
         }
     });
+
 });
 
 /* ============================
