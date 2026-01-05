@@ -203,5 +203,5 @@ const appointmentCTAEl = document.getElementById("appointmentCTA");
 
 appointmentCTAEl?.addEventListener("click", () => {
   // 🔗 Simple redirect to appointment portal
-  window.location.href = "../PatientPortal-Satyam/book_appointment.html";
+  window.location.href = "../../PatientPortal-Satyam/patient_portal.html";
 });
