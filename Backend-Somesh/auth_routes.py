@@ -72,7 +72,7 @@ def login():
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
         "Doctor": "/Doctor-Portal-Aastha/frontend/doctor-portal.html",
         "Chemist": "/Chemist-Portal-Aastha/frontend/dispensary.html",
-        "Receptionist": "/Reception-Portal/reception.html"
+        "Receptionist": "/ReceptionPortal-Bidisha/Frontend/reception.html"
     }
 
     return jsonify(
