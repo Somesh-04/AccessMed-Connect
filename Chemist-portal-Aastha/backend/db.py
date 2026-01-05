@@ -5,4 +5,8 @@ DATABASE_URL = (
 )
 
 def get_db():
-    return psycopg2.connect(DATABASE_URL)
+    conn = psycopg2.connect(DATABASE_URL)
+    cur = conn.cursor()
+    cur.execute("set search_path to public;")
+    cur.close()
+    return conn
