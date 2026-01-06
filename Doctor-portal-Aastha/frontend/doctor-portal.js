@@ -7,7 +7,7 @@ const doctorRaw = localStorage.getItem("amc_doctor");
 if (!doctorRaw) {
     alert("Please login as a doctor first");
     window.location.href =
-        "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+        "/Landing-Page-Satyam/index.html#login";
 }
 
 const doctor = JSON.parse(doctorRaw);
@@ -45,7 +45,7 @@ const supportLink = document.getElementById("support-link");
 if (supportLink) {
     supportLink.onclick = () => {
         window.location.href =
-            "/AccessMed-Connect/Landing-Page-Satyam/index.html#support";
+            "/Landing-Page-Satyam/index.html#support";
     };
 }
 
@@ -58,7 +58,7 @@ document.getElementById("welcome-doctor").innerText =
 document.getElementById("btn-logout").onclick = () => {
     localStorage.removeItem("amc_doctor");
     window.location.href =
-        "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+        "/Landing-Page-Satyam/index.html#login";
 };
 
 /* ===============================
