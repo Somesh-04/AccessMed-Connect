@@ -1,8 +1,28 @@
+const API = "http://127.0.0.1:5002/api";
+
+/* ===============================
+   READ LOGGED-IN DOCTOR
+=============================== */
+const doctorRaw = localStorage.getItem("amc_doctor");
+if (!doctorRaw) {
+    alert("Please login as a doctor first");
+    window.location.href =
+        "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+}
+
+const doctor = JSON.parse(doctorRaw);
+
+/* ===============================
+   NAVIGATION
+=============================== */
 const navItems = document.querySelectorAll(".nav-pill");
 const sections = document.querySelectorAll(".section");
 
 navItems.forEach(item => {
     item.addEventListener("click", () => {
+
+        if (item.id === "support-link") return;
+
         navItems.forEach(n => n.classList.remove("active"));
         item.classList.add("active");
 
@@ -11,66 +31,169 @@ navItems.forEach(item => {
             sec.classList.remove("active-section");
             if (sec.id === target) sec.classList.add("active-section");
         });
+
+        if (target === "records") {
+            loadRecords();
+        }
     });
 });
 
-const API = "http://127.0.0.1:5002/api";
-
-async function loadDashboard() {
-    const res = await fetch(`${API}/dashboard`);
-    const d = await res.json();
-
-    document.querySelectorAll(".card-metric")[0].innerText = d.appointments;
-    document.querySelectorAll(".card-metric")[1].innerText = d.patients;
-    document.querySelectorAll(".card-metric")[2].innerText = d.reports;
+/* ===============================
+   SUPPORT REDIRECT
+=============================== */
+const supportLink = document.getElementById("support-link");
+if (supportLink) {
+    supportLink.onclick = () => {
+        window.location.href =
+            "/AccessMed-Connect/Landing-Page-Satyam/index.html#support";
+    };
 }
 
+/* ===============================
+   HEADER: NAME + LOGOUT
+=============================== */
+document.getElementById("welcome-doctor").innerText =
+    `Welcome ${doctor.name}`;
+
+document.getElementById("btn-logout").onclick = () => {
+    localStorage.removeItem("amc_doctor");
+    window.location.href =
+        "/AccessMed-Connect/Landing-Page-Satyam/index.html#login";
+};
+
+/* ===============================
+   DASHBOARD
+=============================== */
+async function loadDashboard() {
+    const res = await fetch(
+        `${API}/dashboard?user_id=${doctor.id}`
+    );
+
+    const d = await res.json();
+
+    document.getElementById("metric-appointments").innerText =
+        d.appointments ?? 0;
+
+    document.getElementById("metric-patients").innerText =
+        d.patients ?? 0;
+
+    document.getElementById("metric-reports").innerText =
+        d.reports ?? 0;
+}
+
+/* ===============================
+   PATIENTS
+=============================== */
+let selectedPatientId = null;
+
 async function loadPatients() {
-    const res = await fetch(`${API}/patients`);
+    const res = await fetch(
+        `${API}/patients?user_id=${doctor.id}`
+    );
+
     const data = await res.json();
-    const container = document.querySelector("#patients .ref-card-container");
+    const container = document.getElementById("patientsContainer");
     container.innerHTML = "";
 
     data.forEach(p => {
-        container.innerHTML += `
-        <div class="ref-card">
-            <h3>Patient: ${p.name}</h3>
-            <table class="vitals-table">
-                <tr><td>Age</td><td>${p.age}</td></tr>
-                <tr><td>Blood Group</td><td>${p.blood}</td></tr>
-                <tr><td>Condition</td><td>${p.condition}</td></tr>
-            </table>
-        </div>`;
+        const card = document.createElement("div");
+        card.className = "ref-card";
+        card.innerHTML = `<h3>${p.name}</h3>`;
+        card.onclick = () => selectPatient(p.id, card);
+        container.appendChild(card);
     });
 }
 
-async function loadRecords() {
-    const res = await fetch(`${API}/records`);
-    const data = await res.json();
-    const list = document.querySelector(".symptom-list");
-    list.innerHTML = "";
-    data.forEach(r => list.innerHTML += `<li>${r.test} – ${r.status}</li>`);
+function selectPatient(id, card) {
+    selectedPatientId = id;
+
+    document
+        .querySelectorAll(".ref-card")
+        .forEach(c => c.classList.remove("active"));
+
+    card.classList.add("active");
+
+    document.querySelector('[data-section="records"]').click();
 }
 
-async function loadMedicines() {
-    const res = await fetch(`${API}/medicines`);
+/* ===============================
+   RECORDS (ALL REPORTS FOR DOCTOR)
+=============================== */
+async function loadRecords() {
+    const res = await fetch(
+        `${API}/reports?user_id=${doctor.id}`
+    );
+
     const data = await res.json();
-    const container = document.querySelector("#medicine-availability .ref-card-container");
-    container.innerHTML = "";
+    const list = document.getElementById("recordsList");
+    const hint = document.getElementById("recordsHint");
+
+    list.innerHTML = "";
+    hint.style.display = "none";
+
+    if (!data.length) {
+        list.innerHTML = `<li class="note">No medical reports found</li>`;
+        return;
+    }
+
+    data.forEach(r => {
+        list.innerHTML += `
+            <li>
+                <b>${r.patient_name}</b> —
+                <a href="${r.file_url}" target="_blank">${r.name}</a>
+            </li>
+        `;
+    });
+}
+
+/* ===============================
+   MEDICINE SEARCH
+=============================== */
+const searchInput = document.getElementById("medicineSearch");
+const searchBtn = document.getElementById("medicineSearchBtn");
+const resultBox = document.getElementById("medicineResults");
+
+async function searchMedicine(query) {
+    resultBox.innerHTML = "";
+    if (!query) return;
+
+    const res = await fetch(
+        `${API}/medicines/search/${query}`
+    );
+
+    const data = await res.json();
+
+    if (!data.length) {
+        resultBox.innerHTML =
+            `<p class="note">Medicine not available</p>`;
+        return;
+    }
 
     data.forEach(m => {
-        container.innerHTML += `
-        <div class="ref-card">
-            <h3>${m.name}</h3>
-            <p class="note">Stock: ${m.stock}</p>
-            <p class="note">Expiry: ${m.expiry}</p>
-        </div>`;
+        resultBox.innerHTML += `
+            <div class="ref-card">
+                <h3>${m.name}</h3>
+                <p class="note">Quantity: ${m.stock}</p>
+                <p class="note">Expiry: ${m.expiry}</p>
+            </div>
+        `;
     });
 }
 
+searchInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+        searchMedicine(searchInput.value.trim());
+    }
+});
+
+searchBtn.onclick = () => {
+    searchMedicine(searchInput.value.trim());
+};
+
+/* ===============================
+   INIT
+=============================== */
 document.addEventListener("DOMContentLoaded", () => {
     loadDashboard();
     loadPatients();
-    loadRecords();
-    loadMedicines();
 });

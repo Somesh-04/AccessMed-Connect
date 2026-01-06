@@ -70,7 +70,7 @@ def login():
 
     redirect_paths = {
         "Patient": "/PatientPortal-Satyam/patient_portal.html",
-        "Doctor": "/Doctor-Portal-Aastha/frontend/doctor-portal.html",
+        "Doctor": "/AccessMed-Connect/Doctor-Portal-Aastha/frontend/doctor-portal.html",
         "Chemist": "/Chemist-Portal-Aastha/frontend/dispensary.html",
         "Receptionist": "/ReceptionPortal-Bidisha/Frontend/reception.html"
     }

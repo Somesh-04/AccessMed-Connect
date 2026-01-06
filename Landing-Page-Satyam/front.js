@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* ============================
-       LOGIN HANDLER
+       LOGIN HANDLER  (FIXED)
     ============================ */
     loginForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -73,7 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const identifier = loginForm.querySelector("input[type='text']").value.trim();
         const password = document.getElementById("loginPass").value.trim();
 
-        if (!identifier || !password) return alert("Fill all fields");
+        if (!identifier || !password) {
+            alert("Fill all fields");
+            return;
+        }
 
         try {
             const res = await fetch(`${API_BASE}/login`, {
@@ -84,12 +87,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
 
-            if (!res.ok) return alert(data.error || "Login failed");
+            if (!res.ok) {
+                alert(data.error || "Login failed");
+                return;
+            }
 
-            // save user
+            /* ----------------------------
+               STORE USER (GENERIC)
+            ----------------------------- */
             localStorage.setItem("amc_user", JSON.stringify(data.user));
 
-            // redirect by backend
+            /* ----------------------------
+               STORE DOCTOR (CRITICAL FIX)
+            ----------------------------- */
+            if (data.user.role === "Doctor") {
+                localStorage.setItem(
+                    "amc_doctor",
+                    JSON.stringify({
+                        id: data.user.doctor_id || data.user.id,
+                        name: data.user.full_name
+                    })
+                );
+            }
+
+            /* ----------------------------
+               REDIRECT
+            ----------------------------- */
             window.location.href = data.redirect_to;
 
         } catch (err) {
@@ -99,35 +122,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ============================
-       SIGNUP HANDLER  (NO HTML ID NEEDED)
+       SIGNUP HANDLER
     ============================ */
     signupForm.addEventListener("submit", async e => {
         e.preventDefault();
 
-        // inputs INSIDE signup form (no id dependency)
         const inputs = signupForm.querySelectorAll("input");
         const selects = signupForm.querySelectorAll("select");
 
-        const full_name = inputs[0].value.trim();   // Full Name
-        const emp_id_raw = inputs[1].value.trim();  // Emp ID
-        const role = selects[0].value;              // Role dropdown
-        const email = inputs[2].value.trim();       // Email
-        const password = inputs[3].value.trim();    // Password
+        const full_name = inputs[0].value.trim();
+        const emp_id_raw = inputs[1].value.trim();
+        const role = selects[0].value;
+        const email = inputs[2].value.trim();
+        const password = inputs[3].value.trim();
 
         if (!full_name || !emp_id_raw || !role || !email || !password) {
             alert("Fill all fields");
             return;
         }
 
-        // convert employee id to bigint
         const emp_id = Number(emp_id_raw);
-
         if (isNaN(emp_id)) {
             alert("Employee ID must contain digits only");
             return;
         }
 
-        // backend role validation
         const allowedRoles = ["Doctor", "Patient", "Receptionist", "Chemist"];
         if (!allowedRoles.includes(role)) {
             alert("Invalid role selected");
@@ -155,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             alert("Signup successful — please login now");
-            openLogin(); // switch to login tab
+            openLogin();
 
         } catch (err) {
             console.error(err);
@@ -168,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ============================
    OPEN PAGE VIA HASH
 ============================ */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const hash = window.location.hash;
     if (!hash) return;
 
