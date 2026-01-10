@@ -53,7 +53,7 @@ if (supportLink) {
    HEADER: NAME + LOGOUT
 =============================== */
 document.getElementById("welcome-doctor").innerText =
-    `Welcome ${doctor.name}`;
+    `Welcome Dr. ${doctor.name}`;
 
 document.getElementById("btn-logout").onclick = () => {
     localStorage.removeItem("amc_doctor");
