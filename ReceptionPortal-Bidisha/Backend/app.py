@@ -7,17 +7,24 @@ from datetime import datetime
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
 app = Flask(__name__)
 CORS(app)
 
 
 def get_conn():
     return psycopg.connect(
-        DATABASE_URL,
+        host="db.yfqltffmmvkkxglxyuep.supabase.co",
+        port=5432,
+        dbname="postgres",
+        user="postgres",
+        password="SnNaSsBbAs05",
         sslmode="require",
-        connect_timeout=5
+        connect_timeout=10,
+        # Add these parameters
+        keepalives=1,
+        keepalives_idle=30,
+        keepalives_interval=10,
+        keepalives_count=3
     )
 
 # ============================
