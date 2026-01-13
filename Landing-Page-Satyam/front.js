@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* ============================
-       LOGIN HANDLER  (FIXED)
+       LOGIN HANDLER
     ============================ */
     loginForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -92,14 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            /* ----------------------------
-               STORE USER (GENERIC)
-            ----------------------------- */
             localStorage.setItem("amc_user", JSON.stringify(data.user));
 
-            /* ----------------------------
-               STORE DOCTOR (CRITICAL FIX)
-            ----------------------------- */
             if (data.user.role === "Doctor") {
                 localStorage.setItem(
                     "amc_doctor",
@@ -110,9 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-            /* ----------------------------
-               REDIRECT
-            ----------------------------- */
             window.location.href = data.redirect_to;
 
         } catch (err) {
@@ -200,4 +191,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const loginBtn = document.getElementById("loginBtn");
         if (loginBtn) loginBtn.click();
     }
+});
+
+/* ============================
+   SUPPORT FORM — EMAILJS (ADDED)
+============================ */
+document.addEventListener("DOMContentLoaded", () => {
+    const supportForm = document.getElementById("supportForm");
+    const statusEl = document.getElementById("formStatus");
+
+    if (!supportForm) return;
+
+    supportForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        statusEl.textContent = "Sending...";
+
+        const params = {
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            message: document.getElementById("message").value.trim()
+        };
+
+        emailjs
+            .send("service_6k62v7w", "template_6ook6jc", params)
+            .then(() => {
+                statusEl.textContent = "Message sent successfully.";
+                supportForm.reset();
+            })
+            .catch(err => {
+                console.error("EmailJS Error:", err);
+                statusEl.textContent = "Failed to send message. Try again later.";
+            });
+    });
 });

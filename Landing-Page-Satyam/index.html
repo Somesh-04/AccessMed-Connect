@@ -161,11 +161,8 @@
         </section>
     </div>
 
-    <!-- MEDAI PAGE CONTENT --
-
     <!-- EMERGENCY PAGE CONTENT -->
     <div id="emergency-page" class="page-content">
-        <!-- EMERGENCY INFO NAV BAR -->
         <nav>
             <span class="nav-pill">📍 Address</span>
             <span class="nav-pill">☎ Landline</span>
@@ -173,7 +170,6 @@
             <span class="nav-pill">✉ Email</span>
         </nav>
 
-        <!-- ADDRESS CARD -->
         <div class="ref-card-container">
             <div class="ref-card">
                 <h3>📍 Emergency Hospital Address</h3>
@@ -185,7 +181,6 @@
             </div>
         </div>
 
-        <!-- LANDLINE CARD -->
         <div class="ref-card-container">
             <div class="ref-card">
                 <h3>☎ Landline Number</h3>
@@ -194,7 +189,6 @@
             </div>
         </div>
 
-        <!-- PHONE / TOLL FREE CARD -->
         <div class="ref-card-container">
             <div class="ref-card">
                 <h3>📞 Emergency & Toll-Free Numbers</h3>
@@ -206,7 +200,6 @@
             </div>
         </div>
 
-        <!-- EMAIL CARD -->
         <div class="ref-card-container">
             <div class="ref-card">
                 <h3>✉ Emergency Email Contact</h3>
@@ -293,8 +286,16 @@
         © 2025 AccessMed Connect | All Rights Reserved
     </div>
 
-    <!-- EmailJS Script for Support Form -->
+    <!-- EmailJS Script -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <!-- EmailJS INIT (ADDED) -->
+    <script>
+      (function () {
+        emailjs.init("v7zVpOEkaGa1K_-zW");
+      })();
+    </script>
+
     <script src="front.js"></script>
 </body>
 </html>
