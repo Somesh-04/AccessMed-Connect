@@ -6,13 +6,21 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://postgres:SnNaSsBbAs05@db.yfqltffmmvkkxglxyuep.supabase.co:6543/postgres?sslmode=require"
-)
-
 def get_db():
-    return psycopg2.connect(DATABASE_URL)
+    return psycopg2.connect(
+        host="db.yfqltffmmvkkxglxyuep.supabase.co",
+        port=5432,
+        dbname="postgres",
+        user="postgres",
+        password="SnNaSsBbAs05",
+        sslmode="require",
+        connect_timeout=10,
+        # Add these parameters
+        keepalives=1,
+        keepalives_idle=30,
+        keepalives_interval=10,
+        keepalives_count=3
+    )
 
 
 # -------------------------
