@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* ============================
-       LOGIN HANDLER  (FIXED)
     ============================ */
     loginForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -93,12 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             /* ----------------------------
-               STORE USER (GENERIC)
             ----------------------------- */
             localStorage.setItem("amc_user", JSON.stringify(data.user));
 
             /* ----------------------------
-               STORE DOCTOR (CRITICAL FIX)
             ----------------------------- */
             if (data.user.role === "Doctor") {
                 localStorage.setItem(
