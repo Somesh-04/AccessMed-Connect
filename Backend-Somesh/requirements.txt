@@ -7,3 +7,4 @@ pydantic
 Werkzeug
 gunicorn
 psycopg[binary]
+requests
