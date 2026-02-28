@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Patient Portal – AccessMed Connect</title>
+    <link rel="stylesheet" href="patient_portal.css">
+</head>
+
+<body>
+    <!-- HERO HEADER -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="../assets/logo/CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <header class="portal-header">
+        <div class="welcome-text">
+            Welcome, <strong id="welcome-name">—</strong>
+        </div>
+        <button id="btn-logout" class="logout-btn">Logout</button>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-section="dashboard">Dashboard</button>
+        <button class="nav-tab" data-section="appointments">Appointments</button>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="portal-container">
+        <!-- DASHBOARD SECTION -->
+        <div id="dashboard-section" class="section-content active">
+            <!-- PATIENT INFO -->
+            <section class="card info-card">
+                <h3>Patient Details</h3>
+                <div class="info-grid">
+                    <div>
+                        <div class="label">Name</div>
+                        <div class="value" id="patient-name">—</div>
+                    </div>
+                    <div>
+                        <div class="label">Employee ID</div>
+                        <div class="value" id="patient-emp-id">—</div>
+                    </div>
+                    <div>
+                        <div class="label">Email ID</div>
+                        <div class="value" id="patient-email">—</div>
+                    </div>
+                </div>
+            </section>
+            <!-- TWO COLUMN GRID -->
+            <section class="grid-two-col">
+                <!-- LEFT COLUMN -->
+                <div class="col">
+                    <div class="card equal-card">
+                        <h3>Medical History</h3>
+                        <ul class="list-box" id="history-list">
+                            <li class="empty">Loading medical history...</li>
+                        </ul>
+                    </div>
+                    <div class="card equal-card">
+                        <h3>Upcoming Appointments</h3>
+                        <ul class="list-box" id="appointment-list">
+                            <li class="empty">Loading appointments...</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- RIGHT COLUMN -->
+                <div class="col">
+                    <div class="card equal-card">
+                        <h3>Doctor Availability</h3>
+                        <div class="doctor-availability-filters">
+                            <div class="form-group">
+                                <label style="font-size: 12px; color: #cbd5e1;">Department</label>
+                                <select id="dashboard-department">
+                                    <option value="">Select Department</option>
+                                </select>
+                            </div>
+                        </div>
+                        <ul class="list-box" id="doctor-list">
+                            <li class="empty">Select a department to view doctors</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- APPOINTMENTS SECTION -->
+        <div id="appointments-section" class="section-content">
+            <!-- PAGE HEADER -->
+            <section class="page-header">
+                <h2>Book Appointment</h2>
+                <p>Fill in the details below to request an appointment</p>
+            </section>
+            <!-- PATIENT DETAILS -->
+            <section class="card">
+                <h3>Patient Details</h3>
+                <div class="info-grid">
+                    <div>
+                        <div class="label">Name</div>
+                        <div class="value" id="appt-patient-name">—</div>
+                    </div>
+                    <div>
+                        <div class="label">Employee ID</div>
+                        <div class="value" id="appt-patient-emp-id">—</div>
+                    </div>
+                    <div>
+                        <div class="label">Email ID</div>
+                        <div class="value" id="appt-patient-email">—</div>
+                    </div>
+                </div>
+            </section>
+            <!-- APPOINTMENT FORM -->
+            <section class="card">
+                <h3>Appointment Request</h3>
+                <form id="appointment-form" class="form-grid">
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor</label>
+                        <select id="doctor-select" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Date</label>
+                        <input type="date" id="appointment-date" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Reason for Visit</label>
+                        <textarea id="reason" rows="3" required
+                            placeholder="Describe your reason for visiting..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            Submit Appointment Request
+                        </button>
+                        <span id="appt-form-status" class="status"></span>
+                    </div>
+                </form>
+            </section>
+            <!-- APPOINTMENT HISTORY -->
+            <section class="card">
+                <h3>My Appointments</h3>
+                <ul id="appt-appointment-list" class="list-box">
+                    <li class="empty">Loading appointments...</li>
+                </ul>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="portal-footer">
+        <div>© 2025 AccessMed Connect</div>
+        <div>Need help? <a href="../landing/index.html#support-page"
+                style="color: #a5b4fc; text-decoration: none;">Support</a></div>
+    </footer>
+
+    <script src="patient_portal.js"></script>
+</body>
+
+</html>

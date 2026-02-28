@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MedAI | AccessMed Connect</title>
+  <link rel="stylesheet" href="./MedAI.css">
+</head>
+
+<body>
+
+  <div class="medai-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="history-panel">
+      <h3>🕘 History</h3>
+      <ul id="historyList"></ul>
+    </aside>
+
+    <!-- SIDEBAR TOGGLE -->
+    <button id="sidebarToggle" aria-label="Toggle sidebar">
+      ☰
+    </button>
+
+    <!-- MAIN CONTENT -->
+    <main class="medai-main">
+
+      <header class="hero-header">
+        <div class="sidebar">
+          <img src="../../assets/logo/CCL.png" class="hero-logo" />
+          <h2 style="margin-top: 10px;">MedAI</h2> Assistant</h1>
+          <p class="hero-tagline">AI-powered Medical Triage</p>
+          <p class="hero-sub">Central Coalfields Limited</p>
+        </div>
+      </header>
+
+      <div class="ref-card-container">
+        <div class="ref-card">
+          <h3>🧠 Describe your symptoms</h3>
+
+          <div class="symptom-input-wrapper">
+            <button type="button" class="add-report-btn" title="Add report">
+              <span class="plus-icon">+</span>
+            </button>
+
+            <textarea id="symptoms" placeholder="Example: severe stomach pain with vomiting since morning"></textarea>
+
+            <input type="file" id="reportInput" accept="image/*,.pdf,.doc,.docx" hidden />
+          </div>
+          <button id="analyzeBtn">Analyze with MedAI</button>
+
+          <div id="resultBox" class="hidden"></div>
+
+          <!-- Book Appointment CTA -->
+          <div id="appointmentCTA" class="appointment-cta hidden">
+            <span class="appointment-icon">📅</span>
+            <span class="appointment-text">Book Appointment</span>
+          </div>
+
+          <p class="note">
+            MedAI is an AI assistant, not a doctor. This is not a diagnosis.
+          </p>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div>
+          <h3>Contact</h3>
+          <p>Phone: +91 9876543210</p>
+          <p>Email: info@accessmed.com</p>
+
+          <h3>Address</h3>
+          <p>GandhiNagar Colony, Kanke Road, Ranchi, Jharkhand, India-834001</p>
+
+          <h3>Ambulance Service</h3>
+          <p><b>24×7 Available</b></p>
+          <p>Contact Number: 0651-2231425</p>
+        </div>
+
+        <div>
+          <h3>Quick Links</h3>
+          <a data-page="home">Home <li>
+              <a href="./MedAI.html">MedAI</a>
+            </li> <a data-page="emergency">Emergency Support</a>
+            <a data-page="login">Patient Portal</a>
+            <h3>Patient Related</h3>
+            <p>Checkup • Reports • Appointments</p>
+        </div>
+
+        <div>
+          <h3>Social Media</h3>
+          <a href="https://www.instagram.com/centralcoalfieldsltd/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/CentralCoalfieldsLtd/?fref=ts" target="_blank">Facebook</a>
+          <a href="https://x.com/cclranchi" target="_blank">Twitter</a>
+
+          <h3>Working Hours</h3>
+          <p>Mon–Sat: 9 AM – 6 PM</p>
+
+          <h3>Feedback</h3>
+          <p>We value your suggestions!</p>
+        </div>
+      </footer>
+
+      <div class="bottom-bar">
+        © 2025 AccessMed Connect | All Rights Reserved
+      </div>
+
+      <!-- EmailJS Script for Support Form -->
+      <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+      <script src="front.js"></script>
+
+    </main>
+
+  </div>
+
+  <script src="MedAI.js"></script>
+</body>
+
+</html>

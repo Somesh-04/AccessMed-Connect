@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AccessMed Connect | Doctor Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="doctor-portal.css">
+</head>
+
+<body>
+
+    <!-- HERO HEADER -->
+    <header class="hero-header">
+        <div class="hero-content">
+            <img src="../../assets/logo/CCL.png" alt="Central Coalfields Limited" class="hero-logo">
+            <h1 class="hero-title">ACCESSMED CONNECT</h1>
+            <p class="hero-tagline">~Medicine & Medical Records Portal</p>
+            <p class="hero-sub">
+                Central Coalfields Limited <br>
+                <span>(A Subsidiary of Coal India Limited)</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- HEADER -->
+    <header class="hero-header dashboard-header">
+        <div class="dashboard-left">
+            <h1 id="welcome-doctor">Welcome Doctor</h1>
+        </div>
+        <div class="dashboard-right">
+            <button id="btn-logout" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-pill active" data-section="dashboard">Dashboard</a>
+        <a class="nav-pill" data-section="patients">Patients</a>
+        <a class="nav-pill" data-section="records">Records</a>
+        <a class="nav-pill" id="support-link">Support</a>
+        <a class="nav-pill" data-section="medicine">Medicine Availability</a>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="section active-section">
+            <h2 class="section-title">Dashboard</h2>
+
+            <div class="feature-row">
+                <div class="feature-card">
+                    <h4 class="card-title">Appointments</h4>
+                    <div class="card-metric" id="metric-appointments">0</div>
+                </div>
+
+                <div class="feature-card">
+                    <h4 class="card-title">Active Patients</h4>
+                    <div class="card-metric" id="metric-patients">0</div>
+                </div>
+
+                <div class="feature-card">
+                    <h4 class="card-title">Medical Reports</h4>
+                    <div class="card-metric" id="metric-reports">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PATIENTS -->
+        <section id="patients" class="section">
+            <h2 class="section-title">Patients Under Care</h2>
+            <div class="ref-card-container" id="patientsContainer"></div>
+        </section>
+
+        <!-- RECORDS -->
+        <section id="records" class="section">
+            <h2 class="section-title">Medical Records</h2>
+            <p class="note" id="recordsHint">Select a patient to view records.</p>
+            <ul class="symptom-list" id="recordsList"></ul>
+        </section>
+
+        <!-- MEDICINE -->
+        <section id="medicine" class="section">
+            <h2 class="section-title">Medicine Availability</h2>
+
+            <div class="medicine-search-box">
+                <input type="text" id="medicineSearch" placeholder="Search medicine name..." autocomplete="off">
+                <button id="medicineSearchBtn">Search</button>
+            </div>
+
+            <div class="ref-card-container" id="medicineResults"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer-min">
+        <span>&copy; AccessMed Connect 2025</span>
+    </footer>
+
+    <script src="doctor-portal.js"></script>
+</body>
+
+</html>

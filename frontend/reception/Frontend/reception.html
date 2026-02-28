@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reception Portal</title>
+    <link rel="stylesheet" href="reception.css">
+</head>
+
+<body>
+
+    <!-- FULL PAGE BACKGROUND -->
+    <div class="page-bg">
+
+        <!-- HEADER -->
+        <header class="hero-header">
+            <div class="header-inner">
+                <img src="../../assets/logo/CCL.png" class="hero-logo">
+                <h1>RECEPTION PORTAL</h1>
+                <p>Efficient Patient Management</p>
+                <p>Central Coalfields Limited</p>
+            </div>
+        </header>
+
+        <!-- CONTENT WIDTH -->
+        <div class="content-wrapper">
+
+            <!-- NAVBAR -->
+            <nav class="nav-bar">
+                <button class="nav-pill active" onclick="showSection('dashboard', this)">Dashboard</button>
+                <button class="nav-pill" onclick="showSection('doctors', this)">Doctors</button>
+                <button class="nav-pill" onclick="showSection('appointments', this)">Active Appointments</button>
+                <button class="nav-pill" onclick="showSection('book', this)">Book Appointment</button>
+            </nav>
+
+            <!-- MAIN -->
+            <main class="dashboard">
+
+                <!-- DASHBOARD -->
+                <section id="dashboard" class="panel visible">
+                    <h2>Dashboard Overview</h2>
+                    <div class="dashboard-grid">
+                        <div class="dash-card">
+                            <h3>Total Doctors</h3>
+                            <p id="totalDoctors">--</p>
+                        </div>
+
+                        <div class="dash-card">
+                            <h3>Appointments Today</h3>
+                            <p id="appointmentsToday">--</p>
+                        </div>
+
+                        <div class="dash-card">
+                            <h3>Patients Waiting</h3>
+                            <p id="patientsWaiting">--</p>
+                        </div>
+
+                        <div class="dash-card">
+                            <h3>Currently Serving</h3>
+                            <p id="currentlyServing">--</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DOCTORS -->
+                <section id="doctors" class="panel">
+                    <h2>Active Doctors Today</h2>
+
+                    <table id="activeDoctorsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Department</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+
+                <!-- ACTIVE APPOINTMENTS -->
+                <section id="appointments" class="panel">
+                    <h2>Today's Appointments</h2>
+
+                    <table id="appointmentsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+
+                <!-- BOOK APPOINTMENT -->
+                <section id="book" class="panel">
+                    <h2>Book New Appointment</h2>
+
+                    <form class="booking-form">
+
+                        <!-- Patient ID -->
+                        <label>Patient ID
+                            <input type="text" id="patientId" required placeholder="Patient ID">
+                        </label>
+
+                        <!-- Patient Name -->
+                        <label>Patient Name
+                            <input type="text" id="patientName" required placeholder="Use Uppercase Letters">
+                        </label>
+
+                        <!-- Employee Name if Dependent -->
+                        <label id="employeeNameLabel" style="display:none;">Employee Name
+                            <input type="text" id="employeeName" placeholder="Employee Full Name">
+                        </label>
+
+                        <!-- Department -->
+                        <label>Department
+                            <select id="departmentSelect" required onchange="loadDoctorsForDepartment()">
+                                <option value="">Loading...</option>
+                            </select>
+                        </label>
+
+                        <!-- Doctor -->
+                        <label>Doctor
+                            <select id="doctorSelect" disabled>
+                                <option value="">Select Department First</option>
+                            </select>
+                        </label>
+
+                        <!-- Appointment Date -->
+                        <label>Appointment Date
+                            <input type="date" id="appointmentDate" required>
+                        </label>
+
+                        <!-- Reason -->
+                        <label>Reason for Visit
+                            <input type="text" id="reason" required placeholder="Reason for Visit">
+                        </label>
+                        <button type="button" class="primary-btn" onclick="bookAppointment()">Book Appointment</button>
+                    </form>
+                </section>
+
+            </main>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            © 2025 AccessMed Connect — Central Coalfields Limited
+        </footer>
+
+    </div>
+
+    <!-- ===================== -->
+    <!--        SCRIPTS        -->
+    <!-- ===================== -->
+
+    <script>
+
+        /* ===============================
+           LOAD DASHBOARD DATA
+        ================================ */
+        async function loadDashboard() {
+            try {
+                const res = await fetch("http://127.0.0.1:5003/api/reception/dashboard");
+                const data = await res.json();
+
+                document.getElementById("totalDoctors").innerText = data.totalDoctors;
+                document.getElementById("appointmentsToday").innerText = data.appointmentsToday;
+                document.getElementById("patientsWaiting").innerText = data.patientsWaiting;
+                document.getElementById("currentlyServing").innerText = data.currentlyServing;
+
+            } catch (err) {
+                console.error("Dashboard load failed", err);
+            }
+        }
+        loadDashboard();
+
+        /* ===============================
+           LOAD ACTIVE DOCTORS TODAY
+        ================================ */
+        async function loadDoctorsToday() {
+            try {
+                const res = await fetch("http://127.0.0.1:5003/api/reception/doctors-today");
+                const data = await res.json();
+
+                const tbody = document.querySelector("#activeDoctorsTable tbody");
+                tbody.innerHTML = "";
+
+                if (!data.length) {
+                    tbody.innerHTML = `
+                <tr>
+                    <td colspan="2">No doctors available today</td>
+                </tr>`;
+                    return;
+                }
+
+                data.forEach(d => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                <td>${d.name}</td>
+                <td>${d.department}</td>
+            `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (err) {
+                console.error("Failed to load doctors", err);
+            }
+        }
+
+        /* ===============================
+           LOAD TODAY'S APPOINTMENTS
+        ================================ */
+        async function loadAppointmentsToday() {
+            try {
+                const res = await fetch("http://127.0.0.1:5003/api/reception/appointments-today");
+                const data = await res.json();
+
+                const tbody = document.querySelector("#appointmentsTable tbody");
+                tbody.innerHTML = "";
+
+                if (!data.length) {
+                    tbody.innerHTML = `
+                <tr>
+                    <td colspan="4">No appointments today</td>
+                </tr>`;
+                    return;
+                }
+
+                data.forEach((a, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${a.patient_name}</td>
+                <td>${a.doctor_name}</td>
+                <td>${a.status}</td>
+            `;
+                    tbody.appendChild(row);
+                });
+
+            } catch (err) {
+                console.error("Failed to load appointments", err);
+            }
+        }
+
+
+        /* ===============================
+           NAVIGATION (DO NOT TOUCH LOGIC)
+        ================================ */
+        function showSection(id, btn) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+            document.getElementById(id).classList.add('visible');
+
+            document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (id === "doctors") {
+                loadDoctorsToday();
+            }
+
+            if (id === "appointments") {
+                loadAppointmentsToday();
+            }
+        }
+
+        /* ===============================
+           MAIN LOGIC (WAIT FOR DOM)
+        ================================ */
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // ===== ELEMENT REFERENCES =====
+            const departmentSelect = document.getElementById("departmentSelect");
+            const doctorSelect = document.getElementById("doctorSelect");
+            const dateInput = document.getElementById("appointmentDate");
+
+            // SAFETY CHECK (prevents freeze)
+            if (!departmentSelect || !doctorSelect || !dateInput) {
+                console.error("Required form elements not found");
+                return;
+            }
+
+            /* ===============================
+               LOAD DEPARTMENTS FROM BACKEND
+            ================================ */
+            fetch("http://127.0.0.1:5003/api/reception/departments")
+                .then(res => res.json())
+                .then(depts => {
+                    departmentSelect.innerHTML =
+                        `<option value="">Select Department</option>` +
+                        depts.map(d =>
+                            `<option value="${d.id}">${d.name}</option>`
+                        ).join("");
+                })
+                .catch(err => {
+                    console.error("Department load failed", err);
+                    departmentSelect.innerHTML = `<option>Error loading departments</option>`;
+                });
+
+            /* ===============================
+               LOAD DOCTORS (DB-DRIVEN)
+            ================================ */
+            async function loadDoctors() {
+                const deptId = departmentSelect.value;
+                const date = dateInput.value;
+
+                doctorSelect.innerHTML = "";
+                doctorSelect.disabled = true;
+
+                if (!deptId || !date) {
+                    doctorSelect.innerHTML = `<option>Select department and date</option>`;
+                    return;
+                }
+
+                try {
+                    const res = await fetch(
+                        `http://127.0.0.1:5003/api/reception/available-doctors?department_id=${deptId}&date=${date}`
+                    );
+
+                    const doctors = await res.json();
+
+                    if (!doctors.length) {
+                        doctorSelect.innerHTML = `<option>No doctors available</option>`;
+                        return;
+                    }
+
+                    doctorSelect.disabled = false;
+                    doctorSelect.innerHTML =
+                        `<option value="">Select Doctor</option>` +
+                        doctors.map(d =>
+                            `<option value="${d.id}">${d.name}</option>`
+                        ).join("");
+
+                } catch (err) {
+                    console.error("Doctor load error", err);
+                    doctorSelect.innerHTML = `<option>Error loading doctors</option>`;
+                }
+            }
+
+            departmentSelect.addEventListener("change", loadDoctors);
+            dateInput.addEventListener("change", loadDoctors);
+
+            /* ===============================
+               BOOK APPOINTMENT
+            ================================ */
+            window.bookAppointment = async function () {
+
+                const payload = {
+                    patient_id: document.getElementById("patientId").value,
+                    patient_name: document.getElementById("patientName").value,
+                    doctor_id: doctorSelect.value,
+                    date: dateInput.value,
+                    reason: document.getElementById("reason").value
+                };
+
+                if (!payload.patient_id || !payload.doctor_id || !payload.date) {
+                    alert("Please fill all required fields");
+                    return;
+                }
+
+                try {
+                    const res = await fetch(
+                        "http://127.0.0.1:5003/api/reception/book-appointment",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
+                        }
+                    );
+
+                    if (res.ok) {
+                        alert("Appointment booked successfully");
+                    } else {
+                        const err = await res.text();
+                        alert("Booking failed: " + err);
+                    }
+
+                } catch (err) {
+                    alert("Network error: " + err.message);
+                    console.error(err);
+                }
+            };
+
+        });
+    </script>
+
+
+</body>
+
+</html>

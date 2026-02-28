@@ -69,10 +69,10 @@ def login():
         return jsonify(error="Invalid password"), 401
 
     redirect_paths = {
-        "Patient": "/PatientPortal-Satyam/patient_portal.html",
-        "Doctor": "/Doctor-Portal-Aastha/frontend/doctor-portal.html",
-        "Chemist": "/Chemist-Portal-Aastha/frontend/dispensary.html",
-        "Receptionist": "/ReceptionPortal-Bidisha/Frontend/reception.html"
+        "Patient": "/frontend/patient/patient_portal.html",
+        "Doctor": "/frontend/doctor/frontend/doctor-portal.html",
+        "Chemist": "/frontend/chemist/frontend/dispensary.html",
+        "Receptionist": "/frontend/reception/Frontend/reception.html"
     }
 
     return jsonify(

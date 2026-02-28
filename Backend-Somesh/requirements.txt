@@ -1,5 +1,8 @@
-uvicorn
+Flask
+Flask-Cors
+Flask-SQLAlchemy
 python-dotenv
 psycopg2-binary
 pydantic
 Werkzeug
+gunicorn
