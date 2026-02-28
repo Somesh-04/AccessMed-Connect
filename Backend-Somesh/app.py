@@ -1,4 +1,5 @@
-from flask import Flask
+import os
+from flask import Flask, send_from_directory, abort
 from flask_cors import CORS
 from models import db
 from auth_routes import auth
@@ -13,7 +14,7 @@ from chemist.routes.orders import orders_bp as chemist_ord_bp
 from chemist.routes.patients import patients_bp as chemist_pat_bp
 from medai.routes.analyze import analyze_bp
 
-app = Flask(__name__, static_folder="../frontend", static_url_path="/")
+app = Flask(__name__)
 CORS(app)
 
 # ---------- DB CONFIG ----------
@@ -24,7 +25,23 @@ db.init_app(app)
 
 @app.route("/")
 def home():
-    return app.send_static_file("landing/index.html")
+    return send_from_directory("../frontend/landing", "index.html")
+
+@app.route("/<path:filename>")
+def serve_static(filename):
+    frontend_dir = os.path.abspath(os.path.join(app.root_path, "..", "frontend"))
+    
+    # 1. Try serving exactly as requested from the frontend folder
+    exact_path = os.path.join(frontend_dir, filename)
+    if os.path.exists(exact_path) and os.path.isfile(exact_path):
+        return send_from_directory(frontend_dir, filename)
+        
+    # 2. Try serving from landing directory directly (for style.css/front.js linked in index.html)
+    landing_path = os.path.join(frontend_dir, "landing", filename)
+    if os.path.exists(landing_path) and os.path.isfile(landing_path):
+        return send_from_directory(os.path.join(frontend_dir, "landing"), filename)
+        
+    abort(404)
 
 # ---------- BLUEPRINTS ----------
 app.register_blueprint(auth, url_prefix="/api/auth")
