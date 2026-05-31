@@ -1,30 +1,28 @@
 from flask import Blueprint, jsonify
-from chemist.db import get_db
+from sqlalchemy import text
+from models import db
 
 dashboard_bp = Blueprint("dashboard", __name__)
 
 @dashboard_bp.route("/dashboard")
 def dashboard():
-    conn = get_db()
-    cur = conn.cursor()
+    total_stock = db.session.execute(
+        text("select coalesce(sum(quantity_in_stock),0) from medicines;")
+    ).scalar()
 
-    cur.execute("select coalesce(sum(quantity_in_stock),0) from medicines;")
-    total_stock = cur.fetchone()[0]
+    transactions_today = db.session.execute(
+        text("""
+            select count(*) from medicine_orders
+            where created_at::date = current_date;
+        """)
+    ).scalar()
 
-    cur.execute("""
-        select count(*) from medicine_orders
-        where created_at::date = current_date;
-    """)
-    transactions_today = cur.fetchone()[0]
-
-    cur.execute("""
-        select count(*) from medicines
-        where quantity_in_stock <= reorder_level;
-    """)
-    low_stock = cur.fetchone()[0]
-
-    cur.close()
-    conn.close()
+    low_stock = db.session.execute(
+        text("""
+            select count(*) from medicines
+            where quantity_in_stock <= reorder_level;
+        """)
+    ).scalar()
 
     return jsonify({
         "total_medicines": total_stock,

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from chemist.db import get_db
+from sqlalchemy import text
+from models import db
 
 patients_bp = Blueprint("patients", __name__)
 
@@ -10,18 +11,15 @@ def lookup_patient():
     if not emp_id:
         return jsonify({"error": "Employee ID required"}), 400
 
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("""
-        select id, name, emp_id
-        from patients
-        where emp_id = %s;
-    """, (emp_id,))
-
-    row = cur.fetchone()
-    cur.close()
-    conn.close()
+    result = db.session.execute(
+        text("""
+            select id, name, emp_id
+            from patients
+            where emp_id = :emp_id;
+        """),
+        {"emp_id": emp_id}
+    )
+    row = result.fetchone()
 
     if not row:
         return jsonify({"error": "Patient not found"}), 404
