@@ -1,7 +1,7 @@
 console.log("✅ patient_portal.js loaded");
 
-const API_AUTH = "http://127.0.0.1:5003/api/auth";
-const API_PATIENT = "http://127.0.0.1:5003/api/patient";
+const API_AUTH = "/api/auth";
+const API_PATIENT = "/api/patient";
 
 
 document.addEventListener("DOMContentLoaded", () => {

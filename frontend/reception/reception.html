@@ -15,7 +15,7 @@
         <!-- HEADER -->
         <header class="hero-header">
             <div class="header-inner">
-                <img src="../../assets/logo/CCL.png" class="hero-logo">
+                <img src="../assets/logo/CCL.png" class="hero-logo">
                 <h1>RECEPTION PORTAL</h1>
                 <p>Efficient Patient Management</p>
                 <p>Central Coalfields Limited</p>
@@ -164,7 +164,7 @@
         ================================ */
         async function loadDashboard() {
             try {
-                const res = await fetch("http://127.0.0.1:5003/api/reception/dashboard");
+                const res = await fetch("/api/reception/dashboard");
                 const data = await res.json();
 
                 document.getElementById("totalDoctors").innerText = data.totalDoctors;
@@ -183,7 +183,7 @@
         ================================ */
         async function loadDoctorsToday() {
             try {
-                const res = await fetch("http://127.0.0.1:5003/api/reception/doctors-today");
+                const res = await fetch("/api/reception/doctors-today");
                 const data = await res.json();
 
                 const tbody = document.querySelector("#activeDoctorsTable tbody");
@@ -216,7 +216,7 @@
         ================================ */
         async function loadAppointmentsToday() {
             try {
-                const res = await fetch("http://127.0.0.1:5003/api/reception/appointments-today");
+                const res = await fetch("/api/reception/appointments-today");
                 const data = await res.json();
 
                 const tbody = document.querySelector("#appointmentsTable tbody");
@@ -284,7 +284,7 @@
             /* ===============================
                LOAD DEPARTMENTS FROM BACKEND
             ================================ */
-            fetch("http://127.0.0.1:5003/api/reception/departments")
+            fetch("/api/reception/departments")
                 .then(res => res.json())
                 .then(depts => {
                     departmentSelect.innerHTML =
@@ -315,7 +315,7 @@
 
                 try {
                     const res = await fetch(
-                        `http://127.0.0.1:5003/api/reception/available-doctors?department_id=${deptId}&date=${date}`
+                        `/api/reception/available-doctors?department_id=${deptId}&date=${date}`
                     );
 
                     const doctors = await res.json();
@@ -361,7 +361,7 @@
 
                 try {
                     const res = await fetch(
-                        "http://127.0.0.1:5003/api/reception/book-appointment",
+                        "/api/reception/book-appointment",
                         {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },

@@ -3,7 +3,7 @@ console.log("🔥 front.js loaded");
 /* ============================
    CONSTANTS
 ============================ */
-const API_BASE = "http://127.0.0.1:5003/api/auth";
+const API_BASE = "/api/auth";
 
 /* ============================
    PAGE NAVIGATION

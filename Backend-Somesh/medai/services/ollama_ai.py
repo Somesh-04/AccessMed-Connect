@@ -1,20 +1,30 @@
 import requests
 import json
-from medai.services.doctor_context import DOCTOR_CONTEXT
-
 import os
+from medai.services.doctor_context import DOCTOR_CONTEXT, today
+
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 MODEL = os.getenv("OLLAMA_MODEL", "mistral")
 
+def get_formatted_doctor_context():
+    formatted = []
+    for dept, doctors in DOCTOR_CONTEXT.items():
+        formatted.append(f"Department: {dept}")
+        for doc in doctors:
+            days_str = ", ".join(doc["days"])
+            formatted.append(f"  - Name: {doc['name']}, Room: {doc['room']}, Available on: {days_str}")
+    return "\n".join(formatted)
+
 def run_ollama(symptoms_text, report_text=None):
-    today = "today (use current weekday logic yourself)"
+    current_day = today()  # Returns current day abbreviation: e.g. "MON", "TUE"
 
     prompt = f"""
 You are MedAI, a medical triage assistant.
 
-{DOCTOR_CONTEXT}
+Here is the doctor availability information for our clinic:
+{get_formatted_doctor_context()}
 
-Today is {today}.
+Today is {current_day}.
 
 Patient symptoms:
 {symptoms_text}
@@ -24,7 +34,7 @@ Additional report text:
 
 TASK:
 - Assess severity: normal / concerned / serious
-- Choose the MOST appropriate available doctor TODAY
+- Choose the MOST appropriate available doctor TODAY (matching the available days list against the current day: {current_day})
 - Mention doctor name, department, room, and schedule
 - Be concise and professional
 

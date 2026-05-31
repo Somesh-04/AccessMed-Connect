@@ -70,9 +70,9 @@ def login():
 
     redirect_paths = {
         "Patient": "/frontend/patient/patient_portal.html",
-        "Doctor": "/frontend/doctor/frontend/doctor-portal.html",
-        "Chemist": "/frontend/chemist/frontend/dispensary.html",
-        "Receptionist": "/frontend/reception/Frontend/reception.html"
+        "Doctor": "/frontend/doctor/doctor-portal.html",
+        "Chemist": "/frontend/chemist/dispensary.html",
+        "Receptionist": "/frontend/reception/reception.html"
     }
 
     return jsonify(

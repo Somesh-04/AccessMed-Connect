@@ -1,4 +1,4 @@
-const API = "http://127.0.0.1:5003/api/chemist";
+const API = "/api/chemist";
 
 // Cart storage
 let cart = [];
