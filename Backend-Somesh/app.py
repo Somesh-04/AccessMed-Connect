@@ -1,6 +1,11 @@
 import os
 from flask import Flask, send_from_directory, abort
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 from models import db
 from auth_routes import auth
 from patient_routes import patient_bp
@@ -18,7 +23,7 @@ app = Flask(__name__)
 CORS(app)
 
 # ---------- DB CONFIG ----------
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:SnNaSsBbAs05@db.yfqltffmmvkkxglxyuep.supabase.co:5432/postgres?sslmode=require"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
@@ -29,6 +34,10 @@ def home():
 
 @app.route("/<path:filename>")
 def serve_static(filename):
+    # Normalize the path if it contains the frontend prefix
+    if filename.startswith("frontend/"):
+        filename = filename[len("frontend/"):]
+
     frontend_dir = os.path.abspath(os.path.join(app.root_path, "..", "frontend"))
     
     # 1. Try serving exactly as requested from the frontend folder
